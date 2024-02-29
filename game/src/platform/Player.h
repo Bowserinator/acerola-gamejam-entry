@@ -21,7 +21,13 @@ public:
                 velocity.y = 0;
             }
         });
+
     vec2 velocity = vec2(0, 0);
+
+    float friction = 0.8f;
+    float gravity = 1.0f;
+    float speed = 1.0f;
+    float jump = 12.0f;
 
     Player() {}
     void tick(float dt);

@@ -15,4 +15,6 @@ void LevelScene::draw() {
     player->draw();
     for (const auto &collider : colliders)
         DrawRectangle(collider.x, collider.y, collider.width, collider.height, GREEN);
+
+    DrawFPS(10, 10);
 }

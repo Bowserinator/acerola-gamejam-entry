@@ -1,23 +1,24 @@
 #include "Player.h"
+#include "../config.h"
 
 #include <iostream>
 
 void Player::tick(float dt) {
-    // Apply gravity
-    // TODO: gravity property?
-    velocity += vec2(0, 1); // TODO gravity value + dt
+    dt *= GLOBAL_DT_MULTIPLIER;
+
+    velocity += vec2(0, gravity) * dt;
+    velocity.x *= friction;
 
     if (IsKeyDown(KEY_D))
-        velocity += vec2(1, 0);
+        velocity += vec2(speed, 0) * dt;
     if (IsKeyDown(KEY_A))
-        velocity += vec2(-1, 0);
+        velocity += vec2(-speed, 0) * dt;
     if (IsKeyPressed(KEY_W))
-        velocity += vec2(0, -12);
+        velocity += vec2(0, -jump) * dt;
 
-    velocity.x *= 0.8;
-
-    collisionBox.x += velocity.x;
-    collisionBox.y += velocity.y;
+    velocity = velocity.clampMagnitude(0.0f, MAX_VELOCITY);
+    collisionBox.x += velocity.x * dt;
+    collisionBox.y += velocity.y * dt;
 }
 
 void Player::draw() {
