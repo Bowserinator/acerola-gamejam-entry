@@ -5,6 +5,7 @@
     #include <emscripten/emscripten.h>
 #endif
 
+#include "event/EventBuffer.h"
 #include "platform/Player.h"
 #include "scene/LevelScene.h"
 
@@ -27,6 +28,8 @@ int main(void) {
     SetTargetFPS(FPS);
 
     while (!WindowShouldClose()) {
+        EventBuffer::ref()->reset();
+
         scene.tick(GetFrameTime());
 
         BeginDrawing();
