@@ -12,8 +12,7 @@ void LevelScene::tick(float dt) {
     }
 
     // TODO
-    if (IsKeyPressed(KEY_P))
-        dialogBox->setText("This is another example line");
+    dialogManager.update();
 }
 
 void LevelScene::draw() {
