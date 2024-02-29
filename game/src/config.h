@@ -9,4 +9,7 @@ extern const unsigned int FPS;
 extern const float GLOBAL_DT_MULTIPLIER;
 extern const float MAX_VELOCITY;
 
+extern const float FONT_SPACING;
+extern const float DIALOG_BOX_PADDING;
+
 #endif

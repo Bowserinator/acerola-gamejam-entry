@@ -35,9 +35,18 @@ void Player::tick(float dt) {
             EventBuffer::ref()->bufferKeyPressed(KEY_W);
     }
 
-    recentlyOnGround = GetTime() - lastOnGroundTime < COYOTE_TIME; // Update again
-    velocity += vec2(0, recentlyOnGround ? 0.01 : gravity) * dt;
-    velocity.x *= friction;
+    if (isDash && EventBuffer::ref()->isMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        const vec2 dir = (vec2(GetMousePosition()) - getPos()).normalize();
+        velocity = dir * 20.0f;
+    }
+
+    if (!isDash) {
+        recentlyOnGround = GetTime() - lastOnGroundTime < COYOTE_TIME; // Update again
+        velocity += vec2(0, recentlyOnGround ? 0.01 : gravity) * dt;
+        velocity.x *= friction;
+    } else {
+        velocity *= frictionAir;
+    }
 
     onGround = false;
     velocity = velocity.clampMagnitude(0.0f, MAX_VELOCITY);
