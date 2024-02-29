@@ -18,12 +18,15 @@ DialogBox& DialogBox::setChoices(const std::vector<std::string> &choices) {
 }
 
 void DialogBox::tick(float dt) {
+    Panel::tick(dt);
     textPercent += 0.8 * dt;
     if (textPercent > 1.0f)
         textPercent = 1.0f;
 }
 
-void DialogBox::draw() {
+void DialogBox::draw(const Vector2 &pos) {
+    Panel::draw(pos);
+
     DrawRectangle(pos.x, pos.y, size.x, size.y, PURPLE);
 
     bowser_util::DrawTextBoxed(

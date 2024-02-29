@@ -2,16 +2,19 @@
 #define DIALOG_H
 
 #include "../utils/types/vector.h"
+#include "../config.h"
+#include "../ui/components/Panel.h"
+
 #include <string>
 #include <vector>
 
 using namespace bowser_util;
 
-class DialogBox {
+class DialogBox : public ui::Panel {
 public:
-    DialogBox(): pos(vec2(0)), size(vec2(0)), reversed(false) {}
-    DialogBox(vec2 pos, vec2 size, bool reversed): pos(pos), size(size), reversed(reversed) {}
-    DialogBox(const DialogBox &other): pos(other.pos), size(other.size), reversed(other.reversed) {
+    DialogBox(): Panel(vec2(0), vec2(0)), reversed(false) {}
+    DialogBox(vec2 pos, vec2 size, bool reversed): Panel(pos, size), reversed(reversed) {}
+    DialogBox(const DialogBox &other): Panel(other.pos, other.size), reversed(other.reversed) {
         text = other.text;
         choices = other.choices;
     }
@@ -27,15 +30,14 @@ public:
     DialogBox& setText(const std::string &val);
     DialogBox& setChoices(const std::vector<std::string> &choices);
 
-    void tick(float dt);
-    void draw();
+    void tick(float dt) override;
+    void draw(const Vector2 &pos) override;
 
     // TODO: on select?
     // TODO: dialog manager
-    float fontSize = 20.0f;
+    float fontSize = FONT_SIZE;
     float textPercent = 0.0;
 private:
-    vec2 pos, size;
     std::string text;
     std::vector<std::string> choices;
     bool reversed = false;

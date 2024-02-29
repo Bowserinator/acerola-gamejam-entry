@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "*.ts": "typescript",
+        "*.mtx": "markdown_latex_combined",
+        "*.m": "cpp",
+        "*.tcc": "cpp",
+        "unordered_map": "cpp",
+        "fstream": "cpp",
+        "istream": "cpp",
+        "numeric": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp"
+    }
+}

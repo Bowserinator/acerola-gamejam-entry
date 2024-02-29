@@ -4,6 +4,7 @@
 #include <vector>
 #include "../config.h"
 #include "../dialog/DialogBox.h"
+#include "../ui/Scene.h"
 
 class Player;
 class CollisionBox;
@@ -12,9 +13,14 @@ class LevelScene {
 public:
     Player * player;
     std::vector<CollisionBox> colliders;
-    DialogBox dialogBox = DialogBox(vec2(0, screenHeight - 150), vec2(300, 150), true).setText("This text should be longer than a single line");
+    ui::Scene scene;
 
-    LevelScene(Player * player): player(player) {}
+    DialogBox * dialogBox = nullptr;
+
+    LevelScene(Player * player): player(player) {
+        dialogBox = new DialogBox(vec2(0, screenHeight - 150), vec2(300, 150), true);
+        scene.addChild(dialogBox);
+    }
 
     void init();
     void tick(float dt);
