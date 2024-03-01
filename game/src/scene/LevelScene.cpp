@@ -1,7 +1,12 @@
 #include "../platform/Player.h"
 #include "../platform/CollisionBox.h"
 #include "../event/EventBuffer.h"
+#include "LevelSceneManager.h"
 #include "LevelScene.h"
+
+void LevelScene::init() {
+    player->init();
+}
 
 void LevelScene::tick(float dt) {
     if (GetFrameTime() > 0.1) return; // Delta time was too big, maybe user tabbed out?
@@ -25,6 +30,10 @@ void LevelScene::tick(float dt) {
         EventBuffer::ref()->consumeKeyboard();
         EventBuffer::ref()->consumeMouse();
     }
+
+    // Switch scene on fade out
+    if (animations[1].progress() == 1.0f)
+        parent->switchScene(nextScene);
 }
 
 void LevelScene::draw() {

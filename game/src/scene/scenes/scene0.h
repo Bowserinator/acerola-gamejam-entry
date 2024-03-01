@@ -33,6 +33,8 @@ public:
         interactiveColliders[0].onCollide = [this](const CollisionBox&) {
             animations[1].startOnce(); // Fade out
         };
+
+        nextScene = 1;
     }
 
     virtual void draw() override {

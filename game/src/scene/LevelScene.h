@@ -12,6 +12,7 @@
 
 class Player;
 class CollisionBox;
+class LevelSceneManager;
 
 class LevelScene {
 public:
@@ -25,6 +26,8 @@ public:
 
     DialogBox * dialogBox = nullptr;
     DialogManager dialogManager;
+    LevelSceneManager * parent = nullptr;
+    std::size_t nextScene = -1;
 
     LevelScene(Player * player): player(player) {
         dialogBox = new DialogBox(vec2(20, screenHeight - 120), vec2(screenWidth - 40, 100), true);
@@ -39,7 +42,7 @@ public:
         animations.push_back(fadeOutAnimation);
     }
 
-    virtual void init() { player->init(); };
+    virtual void init();
     virtual void onSwitchTo() { animations[0].start(); /* Fade in */ }
     virtual void tick(float dt);
     virtual void draw();

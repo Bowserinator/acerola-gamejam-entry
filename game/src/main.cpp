@@ -9,12 +9,9 @@
 #include "event/FontCache.h"
 
 #include "platform/Player.h"
-#include "scene/scenes/scene0.h"
-#include "scene/scenes/scene1.h"
+#include "scene/LevelSceneManager.h"
 
-Player p;
-Scene0 scene(&p);
-
+LevelSceneManager manager;
 
 int main(void) {
     InitWindow(screenWidth, screenHeight, windowTitle);
@@ -22,8 +19,8 @@ int main(void) {
     InitAudioDevice();
     FontCache::ref()->init();
 
-    scene.init();
-    scene.onSwitchTo();
+    manager.init();
+    manager.switchScene(0);
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, FPS, 1);
@@ -33,11 +30,11 @@ int main(void) {
     while (!WindowShouldClose()) {
         EventBuffer::ref()->reset();
 
-        scene.tick(GetFrameTime());
+        manager.tick(GetFrameTime());
 
         BeginDrawing();
         ClearBackground(BLACK);
-        scene.draw();
+        manager.draw();
         EndDrawing();
     }
 #endif
