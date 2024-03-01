@@ -11,6 +11,18 @@ DialogManager::DialogManager(DialogBox * box): box(box) {
 void DialogManager::update() {
     if (EventBuffer::ref()->isKeyPressed(KEY_X))
         advance();
+    
+    const auto &node = nodes[currentId];
+    if (node.choices.size()) { // Number key select
+        int keys[] = { KEY_ONE, KEY_TWO, KEY_THREE, KEY_FOUR, KEY_FIVE, KEY_SIX, KEY_SEVEN, KEY_EIGHT, KEY_NINE };
+        for (int key = 0; key < 9; key++) {
+            if (EventBuffer::ref()->isKeyPressed(keys[key]) && node.choices.size() > key) {
+                jumpToNode(node.choices[key].second);
+                break;
+            }
+        }   
+    }
+    
 }
 
 void DialogManager::advance() {

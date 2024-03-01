@@ -20,7 +20,7 @@ public:
     DialogManager dialogManager;
 
     LevelScene(Player * player): player(player) {
-        dialogBox = new DialogBox(vec2(0, screenHeight - 150), vec2(600, 150), true);
+        dialogBox = new DialogBox(vec2(20, screenHeight - 170), vec2(screenWidth - 40, 150), true);
         scene.addChild(dialogBox);
         dialogManager.setBox(dialogBox);
 

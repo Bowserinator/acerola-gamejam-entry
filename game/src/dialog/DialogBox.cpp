@@ -3,10 +3,12 @@
 #include "../utils/text_wrap.h"
 #include "../config.h"
 #include "../event/FontCache.h"
+#include "../ui/Style.h"
 
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
+#include <ranges>
 
 DialogBox& DialogBox::setText(const std::string &val) {
     this->text = val;
@@ -92,11 +94,12 @@ void DialogBox::clearChildren() {
 void DialogBox::addChoices() {
     clearChildren();
     int i = 1;
-    for (const auto &choice : choices) {
+    for (const auto &choice : std::views::reverse(choices)) {
         auto btn = (new ui::TextButton(
-            vec2(0, size.y - 40 * i),
-            vec2(size.x, 40),
-            choice.first
+            vec2(DIALOG_BOX_PADDING, size.y - DIALOG_BOX_PADDING - 40 * i),
+            vec2(size.x - 2 * DIALOG_BOX_PADDING, 40),
+            TextFormat("[%d] ", choices.size() - i + 1) + choice.first,
+            ui::Style { .horizontalAlign = ui::Style::Align::Left }
         ))->setClickCallback([this, &choice]() {
             if (!parentManager) throw std::runtime_error("Parent manager was null in DialogBox\n");
             parentManager->jumpToNode(choice.second);
