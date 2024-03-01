@@ -9,18 +9,20 @@ DialogManager::DialogManager(DialogBox * box): box(box) {
 }
 
 void DialogManager::update() {
-    if (currentId == NULL_ID) return;
+    if (EventBuffer::ref()->isKeyPressed(KEY_X))
+        advance();
+}
 
+void DialogManager::advance() {
+    if (currentId == NULL_ID) return;
     const auto &node = nodes[currentId];
 
-    // X to show all text, then skip if regular skippable dialog
-    if (EventBuffer::ref()->isKeyPressed(KEY_X)) {
-        if (box->textPercent < 1.0) {
-            box->textPercent = 1.0;
-        } else if (node.choices.size() == 0 && (GetTime() - lastSkipPress) > SKIP_COOLDOWN) {
-            jumpToNode(node.nextId);
-            lastSkipPress = GetTime();
-        }
+    // Show all text, then skip if regular skippable dialog
+    if (box->textPercent < 1.0) {
+        box->textPercent = 1.0;
+    } else if (node.choices.size() == 0 && (GetTime() - lastSkipPress) > SKIP_COOLDOWN) {
+        jumpToNode(node.nextId);
+        lastSkipPress = GetTime();
     }
 }
 
@@ -30,10 +32,14 @@ void DialogManager::jumpToNode(const int nodeId) {
         box->hide();
         return;
     }
-    const auto &node = nodes[currentId];
+    auto &node = nodes[currentId];
+    node.onActive(node);
     box->show();
     box->setText(node.text);
     box->setChoices(node.choices);
+    box->setTitle(node.title);
+    box->titleColor = node.titleColor;
+    box->textColor = node.textColor;
 }
 
 void DialogManager::setBox(DialogBox * box) {

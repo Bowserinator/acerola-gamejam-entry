@@ -31,17 +31,22 @@ public:
     }
 
     DialogBox& setText(const std::string &val);
+    DialogBox& setTitle(const std::string &title) { this->title = title; return *this; }
     DialogBox& setChoices(const ChoiceVector &choices);
 
     void tick(float dt) override;
     void draw(const Vector2 &pos) override;
+    virtual void onMouseClick(Vector2 localPos, unsigned button) override;
 
     float fontSize = FONT_SIZE;
     float textPercent = 0.0;
+    Color textColor = WHITE;
+    Color titleColor = ORANGE;
 private:
     friend DialogManager;
 
     std::string text;
+    std::string title;
     ChoiceVector choices;
     DialogManager * parentManager = nullptr;
     bool reversed = false;

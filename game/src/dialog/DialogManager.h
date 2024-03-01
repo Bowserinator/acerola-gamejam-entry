@@ -5,6 +5,8 @@
 #include <string>
 #include <map>
 #include <stdexcept>
+#include <functional>
+#include "raylib.h"
 
 using ChoiceVector = std::vector<std::pair<std::string, int>>;
 inline ChoiceVector DEFAULT_EMPTY_CHOICES{};
@@ -20,23 +22,41 @@ public:
 
     struct Node {
         Node() {}
-        Node(const std::string &text, const int id, const int nextId,
-                const ChoiceVector &choices = DEFAULT_EMPTY_CHOICES):
-            text(text), id(id), nextId(nextId), choices(choices) {}
+        Node(const int id, const int nextId, const std::string &text): id(id), nextId(nextId), text(text) {}
         Node(const Node& other):
-            text(other.text), id(other.id), nextId(other.nextId), choices(other.choices) {}
-        Node &operator=(const Node&other) {
-            text = other.text;
+            id(other.id), nextId(other.nextId), choices(other.choices), text(other.text), title(other.title),
+            textColor(other.textColor), titleColor(other.titleColor), onActive(other.onActive) {}
+        Node &operator=(const Node &other) {
             id = other.id;
             nextId = other.nextId;
             choices = other.choices;
+            text = other.text;
+            title = other.title;
+            textColor = other.textColor;
+            titleColor = other.titleColor;
+            onActive = other.onActive;
             return *this;
         }
 
-        std::string text;
-        int id;
-        int nextId;
-        std::vector<std::pair<std::string, int>> choices;
+        Node& setId(int id) { this->id = id; return *this; }
+        Node& setNextId(int nextId) { this->nextId = nextId; return *this; }
+        Node& addChoice(const std::string &choice, const int nextId) {
+            choices.push_back(std::make_pair(choice, nextId));
+            return *this;
+        }
+        Node& setText(const std::string &text) { this->text = text; return *this; }
+        Node& setTitle(const std::string &title) { this->title = title; return *this; }
+        Node& setTextColor(Color textColor) { this->textColor = textColor; return *this; }
+        Node& setTitleColor(Color titleColor) { this->titleColor = titleColor; return *this; }
+        Node& setOnActive(std::function<void(Node&)> onActive) { this->onActive = onActive; return *this; }
+
+        int id, nextId;
+        std::vector<std::pair<std::string, int>> choices = DEFAULT_EMPTY_CHOICES;
+        std::string text = "";
+        std::string title = "";
+        Color textColor = BLACK;
+        Color titleColor = ORANGE;
+        std::function<void(Node&)> onActive = [](Node&){};
     };
 
     void addNode(const Node &node) {
@@ -47,6 +67,9 @@ public:
 
     // Update the dialog manager
     void update();
+
+    // Advance to next node, or complete text
+    void advance();
 
     // Go to node
     void jumpToNode(const int nodeId);

@@ -24,13 +24,13 @@ public:
         scene.addChild(dialogBox);
         dialogManager.setBox(dialogBox);
 
-        dialogManager.addNode(DialogManager::Node("This is an example dialog. You shouldn't read this because it's a placeholder", 1, 2));
-        dialogManager.addNode(DialogManager::Node("lol 2 This is an example dialog. You shouldn't read this", 2, 0, ChoiceVector{
-            std::make_pair("Go to next", 3),
-            std::make_pair("Die", 4)
-        }));
-        dialogManager.addNode(DialogManager::Node("lol 3", 3, 1));
-        dialogManager.addNode(DialogManager::Node("you died :skull:", 4, 1));
+        dialogManager.addNode(DialogManager::Node(1, 2, "This is an example dialog. You shouldn't read this because it's a placeholder"));
+        dialogManager.addNode(DialogManager::Node(2, 0, "lol 2 This is an example dialog. You shouldn't read this")
+            .addChoice("Go to next", 3)
+            .addChoice("die", 4)
+        );
+        dialogManager.addNode(DialogManager::Node(3, 1, "lol 3"));
+        dialogManager.addNode(DialogManager::Node(4, 1, "you died :skull:"));
         dialogManager.jumpToNode(1);
     }
 
