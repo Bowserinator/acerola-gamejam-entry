@@ -7,6 +7,9 @@
 
 using namespace bowser_util;
 
+class Player;
+class LevelScene;
+
 class CollisionBox {
 public:
     enum class FACE { TOP, BOTTOM, LEFT, RIGHT };

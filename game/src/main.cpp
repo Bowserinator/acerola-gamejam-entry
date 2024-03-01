@@ -9,10 +9,11 @@
 #include "event/FontCache.h"
 
 #include "platform/Player.h"
-#include "scene/LevelScene.h"
+#include "scene/scenes/scene0.h"
+#include "scene/scenes/scene1.h"
 
 Player p;
-LevelScene scene(&p);
+Scene0 scene(&p);
 
 
 int main(void) {
@@ -21,9 +22,8 @@ int main(void) {
     InitAudioDevice();
     FontCache::ref()->init();
 
-    scene.colliders.emplace_back(0, 300, 300, 10);
-    scene.colliders.emplace_back(100, 270, 300, 10);
-    scene.colliders.emplace_back(0, 250, 10, 50);
+    scene.init();
+    scene.onSwitchTo();
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, FPS, 1);
@@ -36,6 +36,7 @@ int main(void) {
         scene.tick(GetFrameTime());
 
         BeginDrawing();
+        ClearBackground(BLACK);
         scene.draw();
         EndDrawing();
     }

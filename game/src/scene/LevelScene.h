@@ -3,9 +3,12 @@
 
 #include <vector>
 #include "../config.h"
+#include "../event/Animation.h"
 #include "../dialog/DialogBox.h"
 #include "../dialog/DialogManager.h"
 #include "../ui/Scene.h"
+#include "../utils/easing.h"
+#include "../utils/camera_extra.h"
 
 class Player;
 class CollisionBox;
@@ -14,29 +17,32 @@ class LevelScene {
 public:
     Player * player;
     std::vector<CollisionBox> colliders;
+    std::vector<CollisionBox> interactiveColliders;
+    std::vector<Animation> animations;
+
     ui::Scene scene;
+    bowser_util::Camera2DExtended camera;
 
     DialogBox * dialogBox = nullptr;
     DialogManager dialogManager;
 
     LevelScene(Player * player): player(player) {
-        dialogBox = new DialogBox(vec2(20, screenHeight - 170), vec2(screenWidth - 40, 150), true);
+        dialogBox = new DialogBox(vec2(20, screenHeight - 120), vec2(screenWidth - 40, 100), true);
         scene.addChild(dialogBox);
         dialogManager.setBox(dialogBox);
 
-        dialogManager.addNode(DialogManager::Node(1, 2, "This is an example dialog. You shouldn't read this because it's a placeholder"));
-        dialogManager.addNode(DialogManager::Node(2, 0, "lol 2 This is an example dialog. You shouldn't read this")
-            .addChoice("Go to next", 3)
-            .addChoice("die", 4)
-        );
-        dialogManager.addNode(DialogManager::Node(3, 1, "lol 3"));
-        dialogManager.addNode(DialogManager::Node(4, 1, "you died :skull:"));
-        dialogManager.jumpToNode(1);
+        Animation fadeInAnimation = Animation(0.5f);
+        fadeInAnimation.easingFunction = bowser_util::easeOutBack;
+        Animation fadeOutAnimation = Animation(0.5f);
+        fadeOutAnimation.easingFunction = bowser_util::easeInBack;
+        animations.push_back(fadeInAnimation);
+        animations.push_back(fadeOutAnimation);
     }
 
-    void init();
-    void tick(float dt);
-    void draw();
+    virtual void init() { player->init(); };
+    virtual void onSwitchTo() { animations[0].start(); /* Fade in */ }
+    virtual void tick(float dt);
+    virtual void draw();
 };
 
 

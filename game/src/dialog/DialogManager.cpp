@@ -46,6 +46,7 @@ void DialogManager::jumpToNode(const int nodeId) {
     }
     auto &node = nodes[currentId];
     node.onActive(node);
+    box->reversed = !node.forward;
     box->show();
     box->setText(node.text);
     box->setChoices(node.choices);

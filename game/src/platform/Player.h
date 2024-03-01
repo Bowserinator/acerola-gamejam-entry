@@ -9,7 +9,7 @@
 
 using namespace bowser_util;
 
-constexpr Vector2 PLAYER_SIZE = Vector2{10, 20};
+constexpr Vector2 PLAYER_SIZE = Vector2{20, 50};
 constexpr float COYOTE_TIME = 0.1;
 
 class Player {
@@ -25,15 +25,22 @@ public:
     bool isDash = false;
 
     Player();
+    void init();
     void tick(float dt);
     void draw();
 
     vec2 getPos() const { return vec2(collisionBox.x, collisionBox.y); }
+    void setPos(const vec2 &pos) {
+        collisionBox.x = pos.x;
+        collisionBox.y = pos.y;
+    }
     bool getOnGround() const { return onGround; }
 
 private:
     bool onGround = false;
     double lastOnGroundTime = -99999.0;
+    inline static Texture playerImage;
+    inline static bool loaded = false;
 };
 
 #endif
