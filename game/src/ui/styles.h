@@ -16,8 +16,8 @@ namespace styles {
 
     constexpr Color WINDOW_FADE_BG_COLOR{0, 0, 0, 128};
     constexpr Color WINDOW_TITLE_COLOR = BLUE;
-    constexpr Color SCROLL_TRACK_COLOR{ 60, 60, 60, 255 };
-    constexpr Color SCROLL_THUMB_COLOR = WHITE;
+    constexpr Color SCROLL_TRACK_COLOR{ 220, 220, 220, 255 };
+    constexpr Color SCROLL_THUMB_COLOR{ 160, 160, 160, 255 };
     constexpr Color SLIDER_DEFAULT_BG_COLOR = WHITE;
 }
 

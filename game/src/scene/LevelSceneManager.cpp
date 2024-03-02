@@ -1,10 +1,14 @@
 #include "LevelSceneManager.h"
 #include "scenes/scene0.h"
 #include "scenes/scene1.h"
+#include "scenes/scene_time_test.h"
+#include "scenes/memory1.h"
 
 LevelSceneManager::LevelSceneManager() {
     scenes.push_back(new Scene0(&player));
     scenes.push_back(new Scene1(&player));
+    scenes.push_back(new SceneTimeTest(&player));
+    scenes.push_back(new SceneMemory1(&player)); // 3
 }
 
 void LevelSceneManager::init() {

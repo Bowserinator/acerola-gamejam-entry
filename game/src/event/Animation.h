@@ -28,6 +28,11 @@ public:
         return started ? easingFunction(percent) : 0.0f;
     }
 
+    Animation& setEasingFunction(std::function<float(float)> easingFunction) {
+        this->easingFunction = easingFunction;
+        return *this;
+    }
+
     std::function<float(float)> easingFunction = [](float x) { return x; };
 private:
     float percent = 0.0; // Raw uneased completion percentage 0-1

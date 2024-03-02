@@ -12,24 +12,20 @@ void LevelScene::tick(float dt) {
     if (GetFrameTime() > 0.1) return; // Delta time was too big, maybe user tabbed out?
     scene.update();
 
+    dialogManager.update();
+    if (!dialogBox->getHidden()) {
+        EventBuffer::ref()->consumeKeyboard();
+        EventBuffer::ref()->consumeMouse();
+    }
+
     player->tick(dt);
     for (const auto &collider : colliders)
         player->collisionBox.pushSelfOutsideOf(collider, player->velocity);
     for (auto &collider : interactiveColliders)
         collider.isColliding(player->collisionBox);
 
-    if (IsKeyPressed(KEY_P))
-        animations[1].start();
-
     for (auto &animation : animations)
         animation.tick();
-
-    dialogManager.update();
-
-    if (!dialogBox->getHidden()) {
-        EventBuffer::ref()->consumeKeyboard();
-        EventBuffer::ref()->consumeMouse();
-    }
 
     // Switch scene on fade out
     if (animations[1].progress() == 1.0f)
