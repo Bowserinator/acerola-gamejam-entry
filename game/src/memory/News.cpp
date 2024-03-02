@@ -195,8 +195,8 @@ News News::random() {
     auto r = News {
         .weather = Weather::random()
     };
-    int stonksCount = GetRandomValue(1, 4);
-    int disasterCount = GetRandomValue(0, 2);
+    int stonksCount = GetRandomValue(1, 3);
+    int disasterCount = GetRandomValue(1, 3);
 
     while (r.stonks.size() < stonksCount) {
         auto stonk = Stonks::random();
