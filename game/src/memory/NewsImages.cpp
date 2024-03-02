@@ -20,6 +20,8 @@ void NewsImageCache::init() {
     lotteryImage = loadImg("resources/img/lottery.png");
 
     siteTitleImage = loadImg("resources/img/site-title.png");
+    browserHeader = loadImg("resources/img/window-header.png");
+    desktopBackground = loadImg("resources/img/desktop.png");
 
     _init = true;
 }
@@ -30,4 +32,6 @@ NewsImageCache::~NewsImageCache() {
     UnloadTexture(weatherImages);
     UnloadTexture(lotteryImage);
     UnloadTexture(siteTitleImage);
+    UnloadTexture(browserHeader);
+    UnloadTexture(desktopBackground);
 }

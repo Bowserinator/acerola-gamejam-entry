@@ -39,7 +39,7 @@ struct Weather {
 // News for the current round
 class News {
 public:
-    std::array<int, 5> lotteryNumbers;
+    std::array<int, 3> lotteryNumbers;
     std::vector<Disaster> disasters;
     std::vector<Stonks> stonks;
     Weather weather;

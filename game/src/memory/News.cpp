@@ -108,7 +108,7 @@ const std::vector<std::string> VOLCANO_TITLES({
 const std::vector<std::string> PLANE_TITLES({
     "Plane crash caused by faulty equipment",
     "Plane wheel falls off on runway",
-    "Disaster: airline pilot used ChatGPT to navigate",
+    "Disaster: airline pilot used ChadGPT to fly plane",
     "Passenger plane flies into goose",
     "Pilot finds fuel tank was filled with lemonade",
     "Plane accidentally shot down by missile crew"
@@ -145,7 +145,7 @@ const std::vector<std::string> DEATH_TOLL({
 
 Disaster Disaster::random() {
     Disaster::Category category = static_cast<Disaster::Category>(GetRandomValue(0, (int)Disaster::Category::last - 1));
-    unsigned int dead = GetRandomValue(1, 500);
+    unsigned int dead = GetRandomValue(2, 500);
     std::string summary = "";
     switch(category) {
         case Disaster::Category::FIRE:

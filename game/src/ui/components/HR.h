@@ -3,7 +3,7 @@
 
 #include "raylib.h"
 #include "../Style.h"
-#include "../../../util/vector_op.h"
+#include "../../utils/vector_op.h"
 #include "./abstract/Component.h"
 
 namespace ui {
@@ -12,7 +12,7 @@ namespace ui {
         HR(
             const Vector2 &pos, 
             const Vector2 &size,
-            const Style &style = Style { .borderColor = Color{255, 255, 255, 70} }
+            const Style &style = Style { .borderColor = Color{0, 0, 0, 40} }
         ): Component(pos, size, style) {}
 
         void draw(const Vector2 &screenPos) override {

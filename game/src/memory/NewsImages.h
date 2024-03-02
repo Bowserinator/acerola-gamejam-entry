@@ -9,9 +9,10 @@ public:
     Texture weatherImages;
     Texture stonkImages;
     Texture lotteryImage;
-    Texture gossipImage;
 
     Texture siteTitleImage;
+    Texture browserHeader;
+    Texture desktopBackground;
 
     NewsImageCache(NewsImageCache &other) = delete;
     void operator=(const NewsImageCache&) = delete;

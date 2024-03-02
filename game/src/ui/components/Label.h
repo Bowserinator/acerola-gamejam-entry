@@ -4,8 +4,8 @@
 #include "raylib.h"
 #include "../styles.h"
 #include "../Style.h"
-#include "../../FontCache.h"
-#include "../../../util/vector_op.h"
+#include "../../event/FontCache.h"
+#include "../../utils/vector_op.h"
 #include "./abstract/Component.h"
 
 #include <string>
