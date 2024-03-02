@@ -136,6 +136,12 @@ const std::vector<std::string> INDUSTRIAL_TITLES({
     "Construction vehicle hijacked by 3 year old",
     "Oil tanker sinks at sea"
 });
+const std::vector<std::string> DEATH_TOLL({
+    "{dead} people injured or dead so far...",
+    "Currently there have been {dead} causalities...",
+    "Authorities estimate {dead} dead or injured...",
+    "{dead} causalities have been confirmed..."
+});
 
 Disaster Disaster::random() {
     Disaster::Category category = static_cast<Disaster::Category>(GetRandomValue(0, (int)Disaster::Category::last - 1));
@@ -159,10 +165,10 @@ Disaster Disaster::random() {
         case Disaster::Category::INDUSTRIAL:
             summary = randStr(INDUSTRIAL_TITLES); break;
     }
-
+    
     return Disaster {
         .category = category,
-        .context = "",
+        .context = replace(randStr(DEATH_TOLL), "{dead}", std::to_string(dead)),
         .dead = dead,
         .summary = summary
     };
@@ -172,11 +178,11 @@ Weather Weather::random() {
     auto state = static_cast<Weather::State>(GetRandomValue(0, (int)Weather::State::last - 1));
     std::string name = "";
     switch(state) {
-        case State::SNOWY: { name = "Snowy"; break; }
-        case State::SUNNY: { name = "Sunny"; break; }
-        case State::RAINY: { name = "Rainy"; break; }
-        case State::CLOUDY: { name = "Cloud"; break; }
-        case State::STORMY: { name = "Stormy"; break; }
+        case State::SNOWY: { name = "snowy"; break; }
+        case State::SUNNY: { name = "sunny"; break; }
+        case State::RAINY: { name = "rainy"; break; }
+        case State::CLOUDY: { name = "cloudy"; break; }
+        case State::STORMY: { name = "stormy"; break; }
         default: { name = "???"; break; }
     }
     return Weather {
@@ -200,15 +206,12 @@ News News::random() {
     for (auto i = 0; i < disasterCount; i++)
         r.disasters.push_back(Disaster::random());
 
+    std::sort(r.disasters.begin(), r.disasters.end(), [](auto x1, auto x2) { return x1.summary < x2.summary; });
+    r.disasters.erase(std::unique(r.disasters.begin(), r.disasters.end(),
+        [](auto x1, auto x2) { return x1.summary == x2.summary; }), r.disasters.end());
+
     for (auto i = 0; i < r.lotteryNumbers.size(); i++)
         r.lotteryNumbers[i] = GetRandomValue(0, 99);
-
-    for (auto &i : r.disasters)
-        std::cout << i.summary << "\n";
-    std::cout << "---\n";
-    for (auto &i : r.stonks)
-        std::cout << i.summary << "\n";
-    std::cout << "---\n";
 
     return r;
 }

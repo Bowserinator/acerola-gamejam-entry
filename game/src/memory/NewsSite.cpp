@@ -3,54 +3,104 @@
 #include "../event/FontCache.h"
 #include "../utils/text_wrap.h"
 #include "../config.h"
+#include "NewsImages.h"
 
-constexpr float GAP = 10.0f;
-constexpr float GRID_ITEM_HEIGHT = 150.0;
-constexpr float IMAGE_WIDTH = 150.0;
+#include <random>
+#include <algorithm>
+
+constexpr float GAP = 15.0f;
+constexpr float GRID_ITEM_HEIGHT = 80.0;
+constexpr float IMAGE_WIDTH = 70.0;
+constexpr float IMAGE_HEIGHT = 70.0;
 
 NewsSite::NewsSite(const Vector2 &pos, const Vector2 &size, const News &news): ui::ScrollPanel(pos, size), news(news) {
-    internalSize.y = 1000.0;
+    for (auto &article : news.stonks)
+        newsAggregate.push_back(AggregateNews{
+            .title = article.summary,
+            .subtitle = "Full article available at finance.stonks",
+            .image = &NewsImageCache::ref()->stonkImages,
+            .imageIdx = article.change < 0 ? 0 : 1
+        });
+    for (auto &article : news.disasters)
+        newsAggregate.push_back(AggregateNews{
+            .title = article.summary,
+            .subtitle = article.context,
+            .image = &(NewsImageCache::ref()->disasterImages),
+            .imageIdx = static_cast<int>(article.category)
+        });
+    
+    std::string lotteryNumbers = "";
+    for (auto i = 0 ; i < news.lotteryNumbers.size(); i++) {
+        lotteryNumbers += std::to_string(news.lotteryNumbers[i]);
+        if (i < news.lotteryNumbers.size() - 1)
+            lotteryNumbers += "-";
+    }
 
+    newsAggregate.push_back(AggregateNews{
+        .title = "This month's lottery winners announced!",
+        .subtitle = "The winning numbers were: " + lotteryNumbers,
+        .image = &NewsImageCache::ref()->lotteryImage
+    });
+    newsAggregate.push_back(AggregateNews{
+        .title = "Today's weather is " + news.weather.summary,
+        .subtitle = "Weather News Network",
+        .image = &NewsImageCache::ref()->weatherImages,
+        .imageIdx = static_cast<int>(news.weather.state)
+    });
 
-    // TODO: aggergated news:
-    // title, subtitle, image - that is all
-    // also randomize order
-    // bg image: browser
+    auto rd = std::random_device {}; 
+    auto rng = std::default_random_engine { rd() };
+    std::shuffle(std::begin(newsAggregate), std::end(newsAggregate), rng);
+
+    internalSize.y = (GRID_ITEM_HEIGHT + GAP) * newsAggregate.size() + GAP
+         + NewsImageCache::ref()->siteTitleImage.height + 2 * GAP;
 }
 
 void NewsSite::draw(const Vector2 &pos) {
     DrawRectangle(pos.x, pos.y, size.x, size.y, RAYWHITE);
     ui::ScrollPanel::draw(pos);
 
+    DrawTexture(NewsImageCache::ref()->siteTitleImage,
+        pos.x + size.x / 2 - NewsImageCache::ref()->siteTitleImage.width / 2,
+        pos.y + GAP + offsetTop, WHITE);
+
     const float GRID_ITEM_WIDTH = size.x - 3 * GAP;
 
     BeginScissorMode(pos.x, pos.y, size.x, size.y);
-    for (int i = 0; i < news.stonks.size(); i++) {
-        auto y = GAP + i * (GRID_ITEM_HEIGHT + GAP);
-        DrawRectangleLines(pos.x + GAP, pos.y + y + offsetTop, GRID_ITEM_WIDTH, GRID_ITEM_HEIGHT, BLACK);
+    for (int i = 0; i < newsAggregate.size(); i++) {
+        auto y = GAP + i * (GRID_ITEM_HEIGHT + GAP) + NewsImageCache::ref()->siteTitleImage.height + 2 * GAP;
+        // DrawRectangleLines(pos.x + GAP, pos.y + y + offsetTop, GRID_ITEM_WIDTH, GRID_ITEM_HEIGHT, BLACK);
         bowser_util::DrawTextBoxed(
-            FontCache::ref()->main_font,
-            news.stonks[i].summary.c_str(),
+            FontCache::ref()->web,
+            newsAggregate[i].title.c_str(),
             Rectangle {
-                pos.x + GAP + IMAGE_WIDTH + GAP,
-                pos.y + y + offsetTop + GAP,
-                GRID_ITEM_WIDTH - IMAGE_WIDTH - 2 * GAP,
+                pos.x + 2 * GAP + IMAGE_WIDTH + GAP,
+                pos.y + y + offsetTop,
+                GRID_ITEM_WIDTH - IMAGE_WIDTH - 3 * GAP,
                 GRID_ITEM_HEIGHT - 2 * GAP
             },
-            FONT_SIZE, FONT_SPACING, true, BLACK
+            FONT_SIZE * 0.6f, FONT_SPACING, true, BLACK
         );
 
         bowser_util::DrawTextBoxed(
-            FontCache::ref()->main_font,
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            FontCache::ref()->web,
+            newsAggregate[i].subtitle.c_str(),
             Rectangle {
-                pos.x + GAP + IMAGE_WIDTH + GAP,
-                pos.y + y + offsetTop + GAP + FONT_SIZE,
-                GRID_ITEM_WIDTH - IMAGE_WIDTH - 2 * GAP,
+                pos.x + 2 * GAP + IMAGE_WIDTH + GAP,
+                pos.y + y + offsetTop + GAP / 3 + FONT_SIZE,
+                GRID_ITEM_WIDTH - IMAGE_WIDTH - 3 * GAP,
                 GRID_ITEM_HEIGHT - 2 * GAP - FONT_SIZE
             },
-            FONT_SIZE, FONT_SPACING, true, GRAY
+            FONT_SIZE * 0.8f * 0.7f, FONT_SPACING, true, GRAY
         );
+
+        if (newsAggregate[i].image) {
+            float h = (float)newsAggregate[i].image->height;
+            DrawTexturePro(*(newsAggregate[i].image),
+                Rectangle { newsAggregate[i].imageIdx * h, 0, h, h },
+                Rectangle { pos.x + GAP, pos.y + y + offsetTop - FONT_SIZE / 2, IMAGE_WIDTH, IMAGE_HEIGHT },
+                Vector2{0, 0}, 0.0, WHITE);
+        }
     }
     EndScissorMode();
 }

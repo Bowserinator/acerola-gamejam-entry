@@ -6,6 +6,7 @@
 class FontCache {
 public:
     Font main_font;
+    Font web;
 
     FontCache(FontCache &other) = delete;
     void operator=(const FontCache&) = delete;

@@ -7,6 +7,9 @@
 #include "../ui/components/ScrollPanel.h"
 #include "News.h"
 
+#include <vector>
+#include <string>
+
 using namespace ui;
 
 class NewsSite : public ui::ScrollPanel {
@@ -16,6 +19,15 @@ public:
     void draw(const Vector2 &pos) override;
 private:
     News news;
+
+    struct AggregateNews {
+        std::string title;
+        std::string subtitle = "";
+        Texture * image = nullptr;
+        int imageIdx = 0;
+    };
+
+    std::vector<AggregateNews> newsAggregate;
 };
 
 #endif

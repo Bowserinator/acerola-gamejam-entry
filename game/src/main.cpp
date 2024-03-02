@@ -7,6 +7,7 @@
 
 #include "event/EventBuffer.h"
 #include "event/FontCache.h"
+#include "memory/NewsImages.h"
 
 #include "platform/Player.h"
 #include "scene/LevelSceneManager.h"
@@ -17,6 +18,7 @@ int main(void) {
     InitWindow(screenWidth, screenHeight, windowTitle);
 
     InitAudioDevice();
+    NewsImageCache::ref()->init();
     FontCache::ref()->init();
 
     manager.init();
