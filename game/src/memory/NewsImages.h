@@ -14,6 +14,9 @@ public:
     Texture browserHeader;
     Texture desktopBackground;
 
+    Shader screenShader;
+    int screenShaderResolutionLocation;
+
     NewsImageCache(NewsImageCache &other) = delete;
     void operator=(const NewsImageCache&) = delete;
     ~NewsImageCache();

@@ -9,6 +9,7 @@
 #include "../../memory/NewsImages.h"
 #include "../../ui/components/Label.h"
 #include "../../ui/Style.h"
+#include "../../utils/graphics.h"
 
 class Player;
 
@@ -23,13 +24,18 @@ public:
     virtual void init() override {
         LevelScene::init();
         news = News::random();
-        scene.addChild(new NewsSite(vec2(100, 120), vec2(screenWidth - 200, screenHeight - 200), news));
+        tex = LoadRenderTexture(screenWidth, screenHeight);
+        scene.addChild(new NewsSite(vec2(100, 150), vec2(screenWidth - 200, screenHeight - 200), news));
         scene.addChild(new ui::Label(
             vec2(0, 40),
             vec2(screenWidth, 40),
             "Memorize as much as you can! You will be quizzed! (X to end early)",
-            Style { .horizontalAlign = Style::Align::Center, .verticalAlign = Style::Align::Center }
+            Style { .horizontalAlign = Style::Align::Left, .verticalAlign = Style::Align::Center }
         ));
+
+        bowser_util::setShaderValue(NewsImageCache::ref()->screenShader,
+            NewsImageCache::ref()->screenShaderResolutionLocation, 
+            Vector2{(float)screenWidth, (float)screenHeight});
     }
 
     virtual void onSwitchTo() override {
@@ -38,21 +44,28 @@ public:
     }
 
     virtual void draw() override {
-        DrawTexturePro(NewsImageCache::ref()->desktopBackground,
-            Rectangle{0, 0, (float)NewsImageCache::ref()->desktopBackground.width, (float)NewsImageCache::ref()->desktopBackground.height },
-            Rectangle{0, 0, (float)screenWidth, (float)screenHeight},
-            Vector2{0, 0}, 0.0, WHITE);
-        LevelScene::draw();
+        BeginTextureMode(tex);
+            DrawTexturePro(NewsImageCache::ref()->desktopBackground,
+                Rectangle{0, 0, (float)NewsImageCache::ref()->desktopBackground.width, (float)NewsImageCache::ref()->desktopBackground.height },
+                Rectangle{0, 0, (float)screenWidth, (float)screenHeight},
+                Vector2{0, 0}, 0.0, WHITE);
+            LevelScene::draw();
 
-        double timeLeftPercent = 1.0 - std::min(1.0, (GetTime() - startTime) / TIME_GIVEN);
-        constexpr float rHeight = 10.0f;
-        DrawRectangle(screenWidth / 2, screenHeight - rHeight, screenWidth / 2 * timeLeftPercent, rHeight, WHITE);
-        DrawRectangle(screenWidth / 2 * (1 - timeLeftPercent), screenHeight - rHeight, screenWidth / 2 * timeLeftPercent + 1, rHeight, WHITE);
+            double timeLeftPercent = 1.0 - std::min(1.0, (GetTime() - startTime) / TIME_GIVEN);
+            constexpr float rHeight = 10.0f;
+            DrawRectangle(screenWidth / 2, screenHeight - rHeight, screenWidth / 2 * timeLeftPercent, rHeight, WHITE);
+            DrawRectangle(screenWidth / 2 * (1 - timeLeftPercent), screenHeight - rHeight, screenWidth / 2 * timeLeftPercent + 1, rHeight, WHITE);
+        EndTextureMode();
+
+        BeginShaderMode(NewsImageCache::ref()->screenShader);
+            bowser_util::drawRenderTexture(tex);
+        EndShaderMode();
     }
 
 private:
     News news;
     double startTime;
+    RenderTexture2D tex;
 };
 
 #endif
