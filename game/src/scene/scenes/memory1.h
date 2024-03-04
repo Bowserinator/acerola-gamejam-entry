@@ -29,7 +29,7 @@ public:
         scene.addChild(new ui::Label(
             vec2(0, 40),
             vec2(screenWidth, 40),
-            "Memorize as much as you can! You will be quizzed! (X to end early)",
+            "Memorize as much news as you can! (Press X to end early)",
             Style { .horizontalAlign = Style::Align::Left, .verticalAlign = Style::Align::Center }
         ));
 
@@ -57,9 +57,9 @@ public:
             DrawRectangle(screenWidth / 2 * (1 - timeLeftPercent), screenHeight - rHeight, screenWidth / 2 * timeLeftPercent + 1, rHeight, WHITE);
         EndTextureMode();
 
-        BeginShaderMode(NewsImageCache::ref()->screenShader);
+        // BeginShaderMode(NewsImageCache::ref()->screenShader);
             bowser_util::drawRenderTexture(tex);
-        EndShaderMode();
+        // EndShaderMode();
     }
 
 private:

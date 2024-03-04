@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+extern const std::vector<std::string> COMPANIES;
+
 struct Stonks {
     std::string company;
     int change;
