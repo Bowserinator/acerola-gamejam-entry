@@ -14,6 +14,9 @@ public:
     Texture browserHeader;
     Texture desktopBackground;
 
+    Texture apartmentBackground;
+    Texture Xprompt;
+
     Shader screenShader;
     int screenShaderResolutionLocation;
 

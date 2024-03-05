@@ -30,7 +30,7 @@ public:
     std::size_t nextScene = -1;
 
     LevelScene(Player * player): player(player) {
-        dialogBox = new DialogBox(vec2(20, screenHeight - 120), vec2(screenWidth - 40, 100), true);
+        dialogBox = new DialogBox(vec2(20, screenHeight - 120), vec2(screenWidth - 40, 150), true);
         dialogBox->hide();
         scene.addChild(dialogBox);
         dialogManager.setBox(dialogBox);

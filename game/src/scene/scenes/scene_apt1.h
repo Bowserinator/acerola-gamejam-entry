@@ -3,6 +3,8 @@
 
 #include "../LevelScene.h"
 #include "../../config.h"
+#include "../../memory/NewsImages.h"
+#include "../../memory/News.h"
 
 class Player;
 
@@ -12,6 +14,8 @@ public:
         camera.zoom = 2.5;
         camera.offset = vec2(0, 20);
         player->setPos(vec2(150, 150));
+
+        hard_mode = false;
 
         const std::string NOTE_TITLE = "Note";
 
@@ -50,9 +54,12 @@ public:
 
         colliders.emplace_back(0, 190, screenWidth, 100);
         colliders.emplace_back(-100, 0, 100, screenHeight);
-        interactiveColliders.emplace_back(screenWidth / camera.zoom, 0, 100, screenHeight);
+        colliders.emplace_back(screenWidth / camera.zoom, 0, 100, screenHeight);
+        interactiveColliders.emplace_back(screenWidth / 2 / camera.zoom, 0, 100, screenHeight);
         interactiveColliders[0].onCollide = [this](const CollisionBox&) {
-            animations[1].startOnce(); // Fade out
+            showPrompt = true;
+            if (IsKeyPressed(KEY_X))
+                animations[1].startOnce(); // Fade out
         };
 
         nextScene = 3;
@@ -60,21 +67,26 @@ public:
 
     virtual void draw() override {
         BeginMode2D(camera);
-        DrawTexture(bg, 0, 10, WHITE);
+        DrawTexture(NewsImageCache::ref()->apartmentBackground, 0, 10, WHITE);
+        if (showPrompt)
+            DrawTextureEx(
+                NewsImageCache::ref()->Xprompt,
+                Vector2{ screenWidth / 2 / camera.zoom - 10, 90 },
+                0.0, 0.8f / camera.zoom, WHITE
+            );
         EndMode2D();
         
         LevelScene::draw();
+
+        showPrompt = false;
     }
 
     virtual void init() {
         LevelScene::init();
-        Image bgImg = LoadImage("resources/img/scene0-1.png");
-        bg = LoadTextureFromImage(bgImg);
-        UnloadImage(bgImg);
     };
 
 private:
-    Texture2D bg;
+    bool showPrompt = false;
 };
 
 #endif

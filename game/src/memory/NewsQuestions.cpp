@@ -30,7 +30,9 @@ void shuffle2(std::vector<T> &vec) {
 NewsQuestions::NewsQuestions(const News& news): news(news) {
     addRandomQuestionLottery();
 
-    std::vector<int> tmp({1, 2, 3});
+    std::vector<int> tmp = hard_mode ?
+        std::vector<int>({1, 2, 1, 2, 3}) :
+        std::vector<int>({1, 2, 3});
     shuffle2(tmp);
     for (auto i : tmp) {
         if (i == 1) addRandomQuestionStock();

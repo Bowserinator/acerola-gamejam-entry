@@ -93,12 +93,12 @@ void DialogBox::clearChildren() {
 
 void DialogBox::addChoices() {
     clearChildren();
-    int i = 1;
+    int i = 0;
     for (const auto &choice : std::views::reverse(choices)) {
         auto btn = (new ui::TextButton(
-            vec2(DIALOG_BOX_PADDING, size.y - DIALOG_BOX_PADDING - 40 * i),
+            vec2(DIALOG_BOX_PADDING, 40 * i),
             vec2(size.x - 2 * DIALOG_BOX_PADDING, 40),
-            TextFormat("[%d] ", choices.size() - i + 1) + choice.first,
+            TextFormat("[%d] ", i + 1) + choice.first,
             ui::Style { .horizontalAlign = ui::Style::Align::Left }
         ))->setClickCallback([this, &choice]() {
             if (!parentManager) throw std::runtime_error("Parent manager was null in DialogBox\n");

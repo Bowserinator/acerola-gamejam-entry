@@ -50,5 +50,6 @@ public:
 };
 
 inline News global_news;
+inline bool hard_mode = false;
 
 #endif

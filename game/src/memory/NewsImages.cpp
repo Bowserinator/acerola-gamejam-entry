@@ -22,6 +22,8 @@ void NewsImageCache::init() {
     siteTitleImage = loadImg("resources/img/site-title.png");
     browserHeader = loadImg("resources/img/window-header.png");
     desktopBackground = loadImg("resources/img/desktop.png");
+    apartmentBackground = loadImg("resources/img/apartment.png");
+    Xprompt = loadImg("resources/img/x-prompt.png");
 
     screenShader = LoadShader(nullptr, "resources/shaders/screen.fs");
     screenShaderResolutionLocation = GetShaderLocation(screenShader, "resolution");
@@ -37,5 +39,7 @@ NewsImageCache::~NewsImageCache() {
     UnloadTexture(siteTitleImage);
     UnloadTexture(browserHeader);
     UnloadTexture(desktopBackground);
+    UnloadTexture(apartmentBackground);
+    UnloadTexture(Xprompt);
     UnloadShader(screenShader);
 }
