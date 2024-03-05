@@ -49,4 +49,6 @@ public:
     static News random();
 };
 
+inline News global_news;
+
 #endif

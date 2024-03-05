@@ -24,7 +24,7 @@ NewsSite::NewsSite(const Vector2 &pos, const Vector2 &size, const News &news): u
             .title = article.summary,
             .subtitle = "Full article available at finance.stonks",
             .image = &NewsImageCache::ref()->stonkImages,
-            .imageIdx = article.change < 0 ? 0 : 1
+            .imageIdx = article.change > 0 ? 0 : 1
         });
     for (auto &article : news.disasters)
         newsAggregate.push_back(AggregateNews{

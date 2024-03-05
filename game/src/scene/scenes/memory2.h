@@ -21,8 +21,14 @@ public:
 
     virtual void init() override {
         LevelScene::init();
-        news = News::random();
-        scene.addChild(new StreamSite(vec2(100, 150), vec2(screenWidth - 200, screenHeight - 200), news));
+        news = global_news;
+        screenShader = LoadShader(nullptr, "resources/shaders/wrong.fs");
+        shaderStrengthLoc = GetShaderLocation(screenShader, "strength");
+        tex = LoadRenderTexture(screenWidth, screenHeight);
+        SetTextureWrap(tex.texture, TEXTURE_WRAP_CLAMP);
+
+        site = new StreamSite(vec2(100, 150), vec2(screenWidth - 200, screenHeight - 200), news);
+        scene.addChild(site);
 
         scene.addChild(new ui::Label(
             vec2(0, 40),
@@ -31,25 +37,38 @@ public:
             Style { .horizontalAlign = Style::Align::Left, .verticalAlign = Style::Align::Center }
         ));
 
-        // bowser_util::setShaderValue(NewsImageCache::ref()->screenShader,
-        //     NewsImageCache::ref()->screenShaderResolutionLocation, 
-        //     Vector2{(float)screenWidth, (float)screenHeight});
+        bowser_util::setShaderValue(screenShader,
+            GetShaderLocation(screenShader, "resolution"), 
+            Vector2{(float)screenWidth, (float)screenHeight});
     }
 
     virtual void onSwitchTo() override {
         LevelScene::onSwitchTo();
+        site->reset();
     }
 
     virtual void draw() override {
-        DrawTexturePro(NewsImageCache::ref()->desktopBackground,
-            Rectangle{0, 0, (float)NewsImageCache::ref()->desktopBackground.width, (float)NewsImageCache::ref()->desktopBackground.height },
-            Rectangle{0, 0, (float)screenWidth, (float)screenHeight},
-            Vector2{0, 0}, 0.0, WHITE);
-        LevelScene::draw();
+        BeginTextureMode(tex);
+            DrawTexturePro(NewsImageCache::ref()->desktopBackground,
+                Rectangle{0, 0, (float)NewsImageCache::ref()->desktopBackground.width, (float)NewsImageCache::ref()->desktopBackground.height },
+                Rectangle{0, 0, (float)screenWidth, (float)screenHeight},
+                Vector2{0, 0}, 0.0, WHITE);
+            LevelScene::draw();
+        EndTextureMode();
+
+        bowser_util::setShaderValue(screenShader, shaderStrengthLoc, site->distortion); 
+
+        BeginShaderMode(screenShader);
+            bowser_util::drawRenderTexture(tex);
+        EndShaderMode();
     }
 
 private:
     News news;
+    Shader screenShader;
+    StreamSite * site;
+    RenderTexture2D tex;
+    int shaderStrengthLoc;
 };
 
 #endif

@@ -53,7 +53,7 @@ std::string replace(std::string s, const std::string &old_s, const std::string &
 Stonks Stonks::random() {
     auto company = COMPANIES[GetRandomValue(0, COMPANIES.size() - 1)];
     auto change = GetRandomValue(-50, 50);
-    auto summary = change < 0 ?
+    auto summary = change > 0 ?
         STOCK_MESSAGES_GOOD[GetRandomValue(0, STOCK_MESSAGES_GOOD.size() - 1)] :
         STOCK_MESSAGES_BAD[GetRandomValue(0, STOCK_MESSAGES_BAD.size() - 1)];
     if (change == 0)

@@ -23,7 +23,8 @@ public:
 
     virtual void init() override {
         LevelScene::init();
-        news = News::random();
+        global_news = News::random();
+        news = global_news;
         tex = LoadRenderTexture(screenWidth, screenHeight);
         scene.addChild(new NewsSite(vec2(100, 150), vec2(screenWidth - 200, screenHeight - 200), news));
         scene.addChild(new ui::Label(
@@ -44,6 +45,12 @@ public:
     }
 
     virtual void draw() override {
+        double timeLeftPercent = 1.0 - std::min(1.0, (GetTime() - startTime) / TIME_GIVEN);
+        if (timeLeftPercent <= 0.0f || IsKeyPressed(KEY_X)) {
+            nextScene = 4;
+            animations[1].startOnce(); // Fade out
+        }
+
         BeginTextureMode(tex);
             DrawTexturePro(NewsImageCache::ref()->desktopBackground,
                 Rectangle{0, 0, (float)NewsImageCache::ref()->desktopBackground.width, (float)NewsImageCache::ref()->desktopBackground.height },
@@ -51,7 +58,6 @@ public:
                 Vector2{0, 0}, 0.0, WHITE);
             LevelScene::draw();
 
-            double timeLeftPercent = 1.0 - std::min(1.0, (GetTime() - startTime) / TIME_GIVEN);
             constexpr float rHeight = 10.0f;
             DrawRectangle(screenWidth / 2, screenHeight - rHeight, screenWidth / 2 * timeLeftPercent, rHeight, WHITE);
             DrawRectangle(screenWidth / 2 * (1 - timeLeftPercent), screenHeight - rHeight, screenWidth / 2 * timeLeftPercent + 1, rHeight, WHITE);

@@ -29,17 +29,21 @@ void shuffle2(std::vector<T> &vec) {
 
 NewsQuestions::NewsQuestions(const News& news): news(news) {
     addRandomQuestionLottery();
-    addRandomQuestionStock();
-    addRandomQuestionDisaster();
-    addRandomQuestionWeather();
-    
 
-    for (auto &question : questions) {
-        std::cout << question.question << "\n";
-        for (auto &option : question.options)
-            std::cout << "- " << option << "\n";
-        std::cout << "correct: " << question.correctOption << "\n----\n";
+    std::vector<int> tmp({1, 2, 3});
+    shuffle2(tmp);
+    for (auto i : tmp) {
+        if (i == 1) addRandomQuestionStock();
+        if (i == 2) addRandomQuestionDisaster();
+        if (i == 3) addRandomQuestionWeather();
     }
+
+    // for (auto &question : questions) {
+    //     std::cout << question.question << "\n";
+    //     for (auto &option : question.options)
+    //         std::cout << "- " << option << "\n";
+    //     std::cout << "correct: " << question.correctOption << "\n----\n";
+    // }
 }
 
 void NewsQuestions::addRandomQuestionStock() {
