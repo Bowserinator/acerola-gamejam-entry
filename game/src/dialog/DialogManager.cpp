@@ -47,7 +47,10 @@ void DialogManager::jumpToNode(const int nodeId) {
     auto &node = nodes[currentId];
     node.onActive(node);
     box->reversed = !node.forward;
-    box->show();
+    if (node.text.length() != 0 || node.choices.size() != 0)
+        box->show();
+    else
+        box->hide();
     box->setText(node.text);
     box->setChoices(node.choices);
     box->setTitle(node.title);

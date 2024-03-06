@@ -29,6 +29,11 @@ public:
     LevelSceneManager * parent = nullptr;
     std::size_t nextScene = -1;
 
+    int lightMapId = 0;
+    inline static Shader playerLightShader;
+    inline static int lightTextureLoc;
+    inline static int lightTextureRectLoc;
+
     LevelScene(Player * player): player(player) {
         dialogBox = new DialogBox(vec2(20, screenHeight - 120), vec2(screenWidth - 40, 150), true);
         dialogBox->hide();

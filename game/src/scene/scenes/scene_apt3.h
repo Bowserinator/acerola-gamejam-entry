@@ -33,6 +33,7 @@ public:
 
         dialogManager.addNode(DialogManager::Node(9, 0, "")
             .setOnActive([this](DialogManager::Node&){
+                dialogManager.jumpToNode(0);
                 animations[1].startOnce(); // Fade out
             }));
 
@@ -55,7 +56,7 @@ public:
         if (showPrompt)
             DrawTextureEx(
                 NewsImageCache::ref()->Xprompt,
-                Vector2{ screenWidth / 2 / camera.zoom - 10, 90 },
+                Vector2{ screenWidth / 2 / camera.zoom - 10, 100 },
                 0.0, 0.8f / camera.zoom, WHITE
             );
         EndMode2D();
@@ -63,6 +64,7 @@ public:
         LevelScene::draw();
 
         showPrompt = false;
+        lightMapId = 1;
     }
 
     virtual void init() {

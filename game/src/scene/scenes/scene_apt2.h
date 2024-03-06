@@ -25,9 +25,9 @@ public:
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(100, 0, "")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR)
-            .addChoice("README.txt", 3)
+            .addChoice("Start stream (starts game)", 9)
             .addChoice("README (2).txt", 6)
-            .addChoice("Start stream (starts game)", 9));
+            .addChoice("README.txt", 3));
 
         // README.txt
         dialogManager.addNode(DialogManager::Node(3, 4, "You read over the note. It's from Cassandra, and covers her monthly streaming routine")
@@ -47,6 +47,7 @@ public:
 
         dialogManager.addNode(DialogManager::Node(9, 0, "")
             .setOnActive([this](DialogManager::Node&){
+                dialogManager.jumpToNode(0);
                 animations[1].startOnce(); // Fade out
             }));
 
@@ -61,6 +62,7 @@ public:
         };
 
         nextScene = 3;
+        lightMapId = 1;
     }
 
     virtual void draw() override {
@@ -69,7 +71,7 @@ public:
         if (showPrompt)
             DrawTextureEx(
                 NewsImageCache::ref()->Xprompt,
-                Vector2{ screenWidth / 2 / camera.zoom - 10, 90 },
+                Vector2{ screenWidth / 2 / camera.zoom - 10, 100 },
                 0.0, 0.8f / camera.zoom, WHITE
             );
         EndMode2D();

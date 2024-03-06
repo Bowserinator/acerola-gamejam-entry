@@ -64,8 +64,8 @@ void Player::tick(float dt) {
 }
 
 void Player::draw() {
-    DrawRectangle(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height, 
-        onGround ? BLUE : RED);
+    // DrawRectangle(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height, 
+    //     onGround ? BLUE : RED);
 
     auto &tex = playerImage;
     const Rectangle source{ 0.0f, 0.0f, (float)tex.width, (float)tex.height };

@@ -3,9 +3,17 @@
 #include "../event/EventBuffer.h"
 #include "LevelSceneManager.h"
 #include "LevelScene.h"
+#include "../memory/NewsImages.h"
+#include "../utils/graphics.h"
 
 void LevelScene::init() {
     player->init();
+
+    if (!IsShaderReady(playerLightShader)) {
+        playerLightShader = LoadShader(nullptr, "resources/shaders/playerLight.fs");
+        lightTextureLoc = GetShaderLocation(playerLightShader, "lightTexture");
+        lightTextureRectLoc = GetShaderLocation(playerLightShader, "lightTextureRegion");
+    }
 }
 
 void LevelScene::tick(float dt) {
@@ -34,7 +42,28 @@ void LevelScene::tick(float dt) {
 
 void LevelScene::draw() {
     BeginMode2D(camera);
-    player->draw();
+
+    auto getLightMapTextureRect = [this](Texture2D &tex) {
+        auto pos = player->getPos();
+        return Vector4{
+            pos.x / tex.width,
+            pos.y / tex.height,
+            player->collisionBox.width / tex.width,
+            player->collisionBox.height / tex.height
+        };
+    };
+
+    if (lightMapId == 1) {
+        BeginShaderMode(playerLightShader);
+        SetShaderValueTexture(playerLightShader, lightTextureLoc, NewsImageCache::ref()->apartmentLights);
+        bowser_util::setShaderValue(playerLightShader, lightTextureRectLoc, getLightMapTextureRect(
+            NewsImageCache::ref()->apartmentLights ));
+        player->draw();
+        EndShaderMode();
+    } else {
+        player->draw();
+    }
+
 #ifdef DEBUG
     for (const auto &collider : colliders)
         DrawRectangleLines(collider.x, collider.y, collider.width, collider.height, GREEN);

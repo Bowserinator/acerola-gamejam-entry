@@ -9,7 +9,7 @@ constexpr float GLOBAL_DT_MULTIPLIER = 60.0f;
 constexpr float MAX_VELOCITY = 18.0f;
 
 constexpr float FONT_SIZE = 20.0f;
-constexpr float FONT_SPACING = 1.0f;
+constexpr float FONT_SPACING = 0.0f;
 constexpr float DIALOG_BOX_PADDING = 15.0f;
 
 constexpr Color PLAYER_TITLE_COLOR{ 255, 255, 0, 255 };
