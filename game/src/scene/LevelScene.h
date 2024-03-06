@@ -44,7 +44,7 @@ public:
     }
 
     virtual void init();
-    virtual void onSwitchTo() { animations[0].start(); /* Fade in */ }
+    virtual void onSwitchTo();
     virtual void tick(float dt);
     virtual void draw();
 };

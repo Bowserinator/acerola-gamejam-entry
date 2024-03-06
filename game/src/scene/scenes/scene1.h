@@ -12,10 +12,11 @@ public:
         camera.zoom = 1.5;
 
         const std::string NPCTitle = "Taxi Driver";
+        nextScene = 5;
 
         dialogManager.addNode(DialogManager::Node(1, 2, "*I think I know what's going on*")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(2, 3, "*I have to get back to that store...*")
+        dialogManager.addNode(DialogManager::Node(2, 3, "*I have to get back to that apartment...*")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(3, 4, "*Damn it's not on my phone... what was the address again?*")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
@@ -36,8 +37,12 @@ public:
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
 
         // TODO cutscene inbetween
-        dialogManager.addNode(DialogManager::Node(11, 0, "*The driver hands me a wad of cash and leaves*")
+        dialogManager.addNode(DialogManager::Node(11, 12, "*The driver hands me a wad of cash and leaves*")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
+        dialogManager.addNode(DialogManager::Node(12, 0, "")
+            .setOnActive([this](DialogManager::Node&) {
+                animations[1].startOnce(); // Fade out
+            }));
         dialogManager.jumpToNode(1);
     }
 };

@@ -23,9 +23,9 @@ public:
 
         dialogManager.addNode(DialogManager::Node(6, 7, "Hey so you've reached the debut stream, where she became famous")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(7, 8, "This is all long term predictions so there's no way that she would know unless she lived to over a hundred")
+        dialogManager.addNode(DialogManager::Node(7, 8, "This is all long term predictions so there's no way that she would know unless she lived to be over a hundred")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(8, 11, "The important part is to be consistent with your answers. Good luck!")
+        dialogManager.addNode(DialogManager::Node(8, 11, "There were some aberrant time loops during this, so be consistent! Good luck")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(11, 0, "")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR)

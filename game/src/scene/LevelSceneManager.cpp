@@ -7,6 +7,7 @@
 #include "scenes/scene_time_test.h"
 #include "scenes/memory1.h"
 #include "scenes/memory2.h"
+#include "scenes/memory3.h"
 
 LevelSceneManager::LevelSceneManager() {
     scenes.push_back(new Scene0(&player));
@@ -17,6 +18,7 @@ LevelSceneManager::LevelSceneManager() {
     scenes.push_back(new SceneApt1(&player)); // 5
     scenes.push_back(new SceneApt2(&player)); // 6
     scenes.push_back(new SceneApt3(&player)); // 7
+    scenes.push_back(new SceneMemory3(&player)); // 8
 }
 
 void LevelSceneManager::init() {

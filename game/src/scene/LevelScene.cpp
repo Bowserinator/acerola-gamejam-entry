@@ -52,3 +52,9 @@ void LevelScene::draw() {
     DrawFPS(10, 10);
     #endif
 }
+
+void LevelScene::onSwitchTo() {
+    player->setPos(vec2(150, 150));
+    animations[0].start(); // Fade in
+    player->velocity = vec2(0.);
+}

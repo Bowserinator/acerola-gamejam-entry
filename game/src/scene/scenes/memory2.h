@@ -45,6 +45,7 @@ public:
     virtual void onSwitchTo() override {
         LevelScene::onSwitchTo();
         site->reset();
+        player->setPos(vec2(150, screenHeight));
     }
 
     virtual void draw() override {
