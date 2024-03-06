@@ -16,6 +16,7 @@ public:
 
     Texture apartmentBackground;
     Texture Xprompt;
+    Texture chatTexture;
 
     Shader screenShader;
     int screenShaderResolutionLocation;

@@ -4,6 +4,7 @@
 #include "../config.h"
 #include "../event/FontCache.h"
 #include "../ui/Style.h"
+#include "../memory/NewsImages.h"
 
 #include <cmath>
 #include <iostream>
@@ -37,7 +38,8 @@ void DialogBox::tick(float dt) {
 }
 
 void DialogBox::draw(const Vector2 &pos) {
-    DrawRectangle(pos.x, pos.y, size.x, size.y, GRAY);
+    // DrawRectangle(pos.x, pos.y, size.x, size.y, GRAY);
+    DrawTexture(NewsImageCache::ref()->chatTexture, pos.x, pos.y - 45, WHITE);
 
     DrawTextEx(
         FontCache::ref()->main_font,
@@ -96,10 +98,13 @@ void DialogBox::addChoices() {
     int i = 0;
     for (const auto &choice : std::views::reverse(choices)) {
         auto btn = (new ui::TextButton(
-            vec2(DIALOG_BOX_PADDING, 40 * i),
-            vec2(size.x - 2 * DIALOG_BOX_PADDING, 40),
+            vec2(1, 5 + 36 * i),
+            vec2(size.x - 100, 36),
             TextFormat("[%d] ", i + 1) + choice.first,
-            ui::Style { .horizontalAlign = ui::Style::Align::Left }
+            ui::Style {
+                .horizontalAlign = ui::Style::Align::Left,
+                .borderColor = BLACK
+            }
         ))->setClickCallback([this, &choice]() {
             if (!parentManager) throw std::runtime_error("Parent manager was null in DialogBox\n");
             parentManager->jumpToNode(choice.second);

@@ -56,7 +56,7 @@ public:
         std::vector<std::pair<std::string, int>> choices = DEFAULT_EMPTY_CHOICES;
         std::string text = "";
         std::string title = "";
-        Color textColor = BLACK;
+        Color textColor = WHITE;
         Color titleColor = ORANGE;
         bool forward = true;
         std::function<void(Node&)> onActive = [](Node&){};

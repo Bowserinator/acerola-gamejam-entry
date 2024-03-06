@@ -35,10 +35,12 @@ void LevelScene::tick(float dt) {
 void LevelScene::draw() {
     BeginMode2D(camera);
     player->draw();
+#ifdef DEBUG
     for (const auto &collider : colliders)
         DrawRectangleLines(collider.x, collider.y, collider.width, collider.height, GREEN);
     for (const auto &collider : interactiveColliders)
         DrawRectangleLines(collider.x, collider.y, collider.width, collider.height, BLUE);
+#endif
     EndMode2D();
 
     scene.draw();
