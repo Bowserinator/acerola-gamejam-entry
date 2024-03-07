@@ -25,9 +25,9 @@ public:
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(100, 0, "")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR)
-            .addChoice("Start stream (starts game)", 9)
+            .addChoice("README.txt", 3)
             .addChoice("README (2).txt", 6)
-            .addChoice("README.txt", 3));
+            .addChoice("Start stream (starts game)", 9));
 
         // README.txt
         dialogManager.addNode(DialogManager::Node(3, 4, "You read over the note. It's from Cassandra, and covers her monthly streaming routine")
@@ -51,13 +51,13 @@ public:
                 animations[1].startOnce(); // Fade out
             }));
 
-        colliders.emplace_back(0, 180, screenWidth, 100);
+        colliders.emplace_back(0, 150, screenWidth, 100);
         colliders.emplace_back(-100, 0, 100, screenHeight);
         colliders.emplace_back(screenWidth / camera.zoom, 0, 100, screenHeight);
         interactiveColliders.emplace_back(screenWidth / 2 / camera.zoom, 0, 100, screenHeight);
         interactiveColliders[0].onCollide = [this](const CollisionBox&) {
             showPrompt = true;
-            if (IsKeyPressed(KEY_X))
+            if (IsKeyPressed(KEY_X) && dialogBox->getHidden())
                 dialogManager.jumpToNode(1);
         };
 
@@ -81,9 +81,14 @@ public:
         showPrompt = false;
     }
 
-    virtual void init() {
+    virtual void init() override {
         LevelScene::init();
     };
+
+    virtual void onSwitchTo() override {
+        LevelScene::onSwitchTo();
+        player->scale = 1.5f;
+    }
 
 private:
     bool showPrompt = false;

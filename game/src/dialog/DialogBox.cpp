@@ -96,7 +96,7 @@ void DialogBox::clearChildren() {
 void DialogBox::addChoices() {
     clearChildren();
     int i = 0;
-    for (const auto &choice : std::views::reverse(choices)) {
+    for (const auto &choice : choices) {
         auto btn = (new ui::TextButton(
             vec2(1, 5 + 36 * i),
             vec2(size.x - 100, 36),

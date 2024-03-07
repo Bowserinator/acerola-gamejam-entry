@@ -37,13 +37,13 @@ public:
                 animations[1].startOnce(); // Fade out
             }));
 
-        colliders.emplace_back(0, 180, screenWidth, 100);
+        colliders.emplace_back(0, 150, screenWidth, 100);
         colliders.emplace_back(-100, 0, 100, screenHeight);
         colliders.emplace_back(screenWidth / camera.zoom, 0, 100, screenHeight);
         interactiveColliders.emplace_back(screenWidth / 2 / camera.zoom, 0, 100, screenHeight);
         interactiveColliders[0].onCollide = [this](const CollisionBox&) {
             showPrompt = true;
-            if (IsKeyPressed(KEY_X))
+            if (IsKeyPressed(KEY_X) && dialogBox->getHidden())
                 dialogManager.jumpToNode(1);
         };
 
@@ -67,9 +67,14 @@ public:
         lightMapId = 1;
     }
 
-    virtual void init() {
+    virtual void init() override {
         LevelScene::init();
     };
+
+    virtual void onSwitchTo() override {
+        LevelScene::onSwitchTo();
+        player->scale = 1.5f;
+    }
 
 private:
     bool showPrompt = false;

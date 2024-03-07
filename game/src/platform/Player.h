@@ -9,7 +9,7 @@
 
 using namespace bowser_util;
 
-constexpr Vector2 PLAYER_SIZE = Vector2{20, 50};
+constexpr Vector2 PLAYER_SIZE = Vector2{19, 55};
 constexpr float COYOTE_TIME = 0.1;
 
 class Player {
@@ -36,11 +36,15 @@ public:
     }
     bool getOnGround() const { return onGround; }
 
+    float scale = 1.0f;
 private:
     bool onGround = false;
     double lastOnGroundTime = -99999.0;
     inline static Texture playerImage;
+    inline static Texture playerImage2;
     inline static bool loaded = false;
+    double lastWalkCycle = 0;
+    int walkCycle = 0;
 };
 
 #endif

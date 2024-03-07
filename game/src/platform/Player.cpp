@@ -20,8 +20,11 @@ Player::Player() {
 void Player::init() {
     if (!loaded) {
         Image bgImg = LoadImage("resources/img/player1.png");
+        Image bgImg2 = LoadImage("resources/img/player2.png");
         playerImage = LoadTextureFromImage(bgImg);
+        playerImage2 = LoadTextureFromImage(bgImg2);
         UnloadImage(bgImg);
+        UnloadImage(bgImg2);
         loaded = true;
     }
 }
@@ -67,8 +70,17 @@ void Player::draw() {
     // DrawRectangle(collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height, 
     //     onGround ? BLUE : RED);
 
-    auto &tex = playerImage;
-    const Rectangle source{ 0.0f, 0.0f, (float)tex.width, (float)tex.height };
-    const Rectangle dest{ collisionBox.x, collisionBox.y, collisionBox.width, collisionBox.height };
+    if (GetTime() - lastWalkCycle > 0.2) {
+        lastWalkCycle = GetTime();
+        walkCycle = 1 - walkCycle;
+    }
+
+    auto &tex = velocity.lengthSqr() > 0.01 ? 
+        (walkCycle ? playerImage : playerImage2) : 
+        playerImage;
+    const Rectangle source = velocity.x < 0.0f ?
+        Rectangle{ 0.0f, 0.0f, (float)tex.width, (float)tex.height } :
+        Rectangle{ 0.0f, 0.0f, (float)-tex.width, (float)tex.height };
+    const Rectangle dest{ collisionBox.x - collisionBox.width / 4, collisionBox.y + 5, collisionBox.width * 2 * scale, collisionBox.height * scale };
     DrawTexturePro(tex, source, dest, vec2(0), 0.0f, WHITE);
 }

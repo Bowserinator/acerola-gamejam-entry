@@ -27,7 +27,7 @@ public:
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.jumpToNode(1);
 
-        colliders.emplace_back(0, 190, screenWidth, 100);
+        colliders.emplace_back(0, 170, screenWidth, 100);
         colliders.emplace_back(-100, 0, 100, screenHeight);
         interactiveColliders.emplace_back(screenWidth / camera.zoom, 0, 100, screenHeight);
         interactiveColliders[0].onCollide = [this](const CollisionBox&) {
@@ -45,12 +45,17 @@ public:
         LevelScene::draw();
     }
 
-    virtual void init() {
+    virtual void init() override {
         LevelScene::init();
         Image bgImg = LoadImage("resources/img/scene0-1.png");
         bg = LoadTextureFromImage(bgImg);
         UnloadImage(bgImg);
     };
+
+    virtual void onSwitchTo() override {
+        LevelScene::onSwitchTo();
+        player->scale = 1.3f;
+    }
 
 private:
     Texture2D bg;
