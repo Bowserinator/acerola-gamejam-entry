@@ -16,6 +16,7 @@ public:
 
     Texture apartmentBackground;
     Texture apartmentLights;
+    Texture outsideLights;
     Texture Xprompt;
     Texture chatTexture;
 

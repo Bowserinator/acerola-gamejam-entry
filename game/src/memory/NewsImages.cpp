@@ -26,6 +26,7 @@ void NewsImageCache::init() {
     Xprompt = loadImg("resources/img/x-prompt.png");
     chatTexture = loadImg("resources/img/chatbox.png");
     apartmentLights = loadImg("resources/img/apartment-lights.png");
+    outsideLights = loadImg("resources/img/outside-lights.png");
 
     screenShader = LoadShader(nullptr, "resources/shaders/screen.fs");
     screenShaderResolutionLocation = GetShaderLocation(screenShader, "resolution");
@@ -46,4 +47,5 @@ NewsImageCache::~NewsImageCache() {
     UnloadTexture(chatTexture);
     UnloadTexture(apartmentLights);
     UnloadShader(screenShader);
+    UnloadTexture(outsideLights);
 }

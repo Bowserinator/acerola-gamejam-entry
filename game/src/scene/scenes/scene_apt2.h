@@ -51,7 +51,7 @@ public:
                 animations[1].startOnce(); // Fade out
             }));
 
-        colliders.emplace_back(0, 190, screenWidth, 100);
+        colliders.emplace_back(0, 180, screenWidth, 100);
         colliders.emplace_back(-100, 0, 100, screenHeight);
         colliders.emplace_back(screenWidth / camera.zoom, 0, 100, screenHeight);
         interactiveColliders.emplace_back(screenWidth / 2 / camera.zoom, 0, 100, screenHeight);

@@ -60,6 +60,13 @@ void LevelScene::draw() {
             NewsImageCache::ref()->apartmentLights ));
         player->draw();
         EndShaderMode();
+    } else if (lightMapId == 2) {
+        BeginShaderMode(playerLightShader);
+        SetShaderValueTexture(playerLightShader, lightTextureLoc, NewsImageCache::ref()->outsideLights);
+        bowser_util::setShaderValue(playerLightShader, lightTextureRectLoc, getLightMapTextureRect(
+            NewsImageCache::ref()->outsideLights ));
+        player->draw();
+        EndShaderMode();
     } else {
         player->draw();
     }
