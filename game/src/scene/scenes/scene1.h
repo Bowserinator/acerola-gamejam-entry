@@ -3,6 +3,7 @@
 
 #include "../LevelScene.h"
 #include "../../config.h"
+#include "../../memory/NewsImages.h"
 
 class Player;
 
@@ -53,7 +54,7 @@ public:
 
         interactiveColliders.emplace_back(screenWidth / 2 / camera.zoom, 0, 200, screenHeight);
         interactiveColliders[0].onCollide = [this](const CollisionBox&) {
-            // TODO: show prompt
+            showPrompt = true;
             if (IsKeyPressed(KEY_X))
                 dialogManager.jumpToNode(5);
         };
@@ -66,7 +67,14 @@ public:
         DrawTexture(bg, 0, 10, WHITE);
         EndMode2D();
         
+        if (showPrompt)
+            DrawTextureEx(
+                NewsImageCache::ref()->interactTexture,
+                Vector2{ (float)screenWidth * 0.66f, 320 },
+                0.0, 0.8f, WHITE
+            );
         LevelScene::draw();
+        showPrompt = false;
     }
 
     virtual void init() {
@@ -78,6 +86,7 @@ public:
 
 private:
     Texture2D bg;
+    bool showPrompt = false;
 };
 
 #endif

@@ -19,6 +19,7 @@ public:
     Texture outsideLights;
     Texture Xprompt;
     Texture chatTexture;
+    Texture interactTexture;
 
     Shader screenShader;
     int screenShaderResolutionLocation;

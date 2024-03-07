@@ -8,6 +8,7 @@
 class LevelSceneManager {
 public:
     LevelSceneManager();
+    ~LevelSceneManager();
 
     void init();
     void tick(float dt);
