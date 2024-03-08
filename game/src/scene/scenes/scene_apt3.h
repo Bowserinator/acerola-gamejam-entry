@@ -16,14 +16,14 @@ public:
 
         const std::string NOTE_TITLE = "Note";
 
-        dialogManager.addNode(DialogManager::Node(1, 2, "Uhh... I can never get used to time reversed eating")
+        dialogManager.addNode(DialogManager::Node(1, 2, "Uhh... I can never get used to time reversed eating.")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(2, 6, "Let's see if I wrote anything to myself...")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
 
-        dialogManager.addNode(DialogManager::Node(6, 7, "Hey so you've reached the debut stream, where she became famous")
+        dialogManager.addNode(DialogManager::Node(6, 7, "Hey so you've reached the debut stream, where she became famous.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(7, 8, "This is all long term predictions so there's no way that she would know unless she lived to be over a hundred")
+        dialogManager.addNode(DialogManager::Node(7, 8, "This is all long term predictions so there's no way that she would know unless she lived to be over a hundred.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(8, 11, "There were some aberrant time loops during this, so be consistent! Good luck")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));

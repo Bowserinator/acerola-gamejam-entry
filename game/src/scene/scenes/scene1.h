@@ -15,32 +15,29 @@ public:
         const std::string NPCTitle = "Taxi Driver";
         nextScene = 5;
 
-        dialogManager.addNode(DialogManager::Node(1, 2, "Why was I visiting Cassandra at the hospital?...")
+        dialogManager.addNode(DialogManager::Node(1, 2, "Who was that girl at the hospital?...")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(2, 3, "I have to get back to my apartment...")
+        dialogManager.addNode(DialogManager::Node(2, 3, "I can't remember... I might be too tired, or drunk... but is everything backwards?")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(3, 4, "Damn it's not on my phone... what was the address again?")
+        dialogManager.addNode(DialogManager::Node(3, 4, "It's getting late, I should head back to my apartment.")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(4, 100, "Oh right, I had this sticky note in my pocket")
-            .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(100, 0, "How convenient, there's a taxi there")
+        dialogManager.addNode(DialogManager::Node(4, 0, "How convenient, there's a taxi there.")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
 
-        dialogManager.addNode(DialogManager::Node(5, 6, "What a nutcase!")
+        dialogManager.addNode(DialogManager::Node(5, 6, "Forget it, I'm gonna go take my break!")
             .setTitle(NPCTitle).setTitleColor(NPC1_TITLE_COLOR).setBackwards());
-        dialogManager.addNode(DialogManager::Node(6, 7, "*A taxi driver! Maybe they can take me there*")
+        dialogManager.addNode(DialogManager::Node(6, 7, "...")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(7, 8, "*I show the note to the driver*")
-            .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(8, 9, "Can you take me to this address?")
-            .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(9, 10, "Where? We're already here!")
+        dialogManager.addNode(DialogManager::Node(7, 8, "We just left from there.")
             .setTitle(NPCTitle).setTitleColor(NPC1_TITLE_COLOR).setBackwards());
-        dialogManager.addNode(DialogManager::Node(10, 11, "*I took this taxi before? Maybe I shouldn't say anything...*")
+        dialogManager.addNode(DialogManager::Node(8, 9, "What? Can you take me to this address?")
+            .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
+        dialogManager.addNode(DialogManager::Node(9, 10, "We're here.")
+            .setTitle(NPCTitle).setTitleColor(NPC1_TITLE_COLOR).setBackwards());
+        dialogManager.addNode(DialogManager::Node(10, 11, "(Wait... if time is reversed, then maybe this taxi will take me back home)")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
 
-        // TODO cutscene inbetween
-        dialogManager.addNode(DialogManager::Node(11, 12, "*The driver hands me a wad of cash and leaves*")
+        dialogManager.addNode(DialogManager::Node(11, 12, "(The driver hands me a wad of cash and starts driving)")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(12, 0, "")
             .setOnActive([this](DialogManager::Node&) {

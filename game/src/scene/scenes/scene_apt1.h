@@ -19,36 +19,44 @@ public:
 
         const std::string NOTE_TITLE = "Note";
 
-        dialogManager.addNode(DialogManager::Node(1, 2, "What is going on?....")
+        dialogManager.addNode(DialogManager::Node(1, 2, "Wait this isn't my apartment...")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(2, 3, "Is this a note... it's from myself?")
+        dialogManager.addNode(DialogManager::Node(2, 0, "No, it definitely is, but why do I remember it looking different?")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(3, 4, "Dear future? self if you haven't figured it out yet you can only remember the future")
+
+        dialogManager.addNode(DialogManager::Node(3, 100, "There's a notepad file open already... from myself?")
+            .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
+        dialogManager.addNode(DialogManager::Node(100, 0, "")
+            .addChoice("Open MESSAGE_FROM_SELF.txt", 4)
+            .addChoice("Memorize the news (Starts game)", 16));
+        dialogManager.addNode(DialogManager::Node(4, 5, "Dear future (subjective past) me, in case you haven't figured it out you are experiencing time backwards.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(4, 5, "I have no idea why this is happening but it might be related to Cassandra")
+        dialogManager.addNode(DialogManager::Node(5, 6, "More specifically, you can only remember events from the future, as far as my tests have shown.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(5, 6, "Somehow we ended up in her role")
+        dialogManager.addNode(DialogManager::Node(6, 7, "I don't remember who Cassandra is, but I found another note from someone with her streaming account. Apparently she ran future prediction streams.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(6, 7, "Apparently she did a monthly 'future predictions' stream")
+        dialogManager.addNode(DialogManager::Node(7, 8, "She would memorize as much news as possible the month (after) and recite the predictions. Her account is regarded a famous clairvoyant.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(7, 8, "She would memorize as much news as possible the month before (after?)")
+        dialogManager.addNode(DialogManager::Node(8, 9, "Now that sounds awfully similar to our present situation, but I can't find anything about her from more than a few months back.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(8, 9, "We need to make sure those streams happen to preserve the timeline")
+        dialogManager.addNode(DialogManager::Node(9, 10, "Anyways, it seems I get stuck in a time loop until I ensure the streams go smoothly.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(9, 10, "Since you can't keep notes backwards in time you will have to rely on your memory")
+        dialogManager.addNode(DialogManager::Node(10, 11, "Since you can't keep notes backwards in time you will have to rely on your memory. I tried writing down what I remembered but the notes always get mysteriously deleted...")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(10, 11, "I tried writing down what I remembered but the notes got lost")
+        dialogManager.addNode(DialogManager::Node(11, 12, "Anyways I also wrote you some tips on using a time-reversed computer, in some ways it's very convenient.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(11, 12, "Maybe they got erased from the timeline entirely...")
-            .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(12, 13, "The account credentials are saved in the PC, good luck")
+        dialogManager.addNode(DialogManager::Node(12, 13, "The account credentials are saved in the PC, good luck.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(13, 14, "...")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
          dialogManager.addNode(DialogManager::Node(14, 15, "This is a lot to take in...")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(15, 0, "I suppose I should check out the PC...")
+        dialogManager.addNode(DialogManager::Node(15, 100, "I suppose I should check the news...")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
+        dialogManager.addNode(DialogManager::Node(16, 0, "")
+            .setOnActive([this](DialogManager::Node&) {
+                animations[1].startOnce(); // Fade out
+            }));
 
         dialogManager.jumpToNode(1);
 
@@ -58,8 +66,8 @@ public:
         interactiveColliders.emplace_back(screenWidth / 2 / camera.zoom, 0, 100, screenHeight);
         interactiveColliders[0].onCollide = [this](const CollisionBox&) {
             showPrompt = true;
-            if (IsKeyPressed(KEY_X))
-                animations[1].startOnce(); // Fade out
+            if (IsKeyPressed(KEY_X) && dialogBox->getHidden())
+                dialogManager.jumpToNode(3);
         };
 
         nextScene = 3;
