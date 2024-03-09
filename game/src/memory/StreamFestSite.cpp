@@ -197,6 +197,10 @@ void StreamFestSite::advanceQuestions() {
     prevQuestionId = question.id;
     questionLabel->setText(question.question);
 
+    auto rd = std::random_device {}; 
+    auto rng = std::default_random_engine { rd() };
+    std::shuffle(std::begin(question.choices), std::end(question.choices), rng);
+
     for (auto btn : answerButtons)
         btn->hide()->disable();
     int i = 0;
