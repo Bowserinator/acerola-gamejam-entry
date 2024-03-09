@@ -26,7 +26,9 @@ public:
         global_news = News::random();
         news = global_news;
         tex = LoadRenderTexture(screenWidth, screenHeight);
-        scene.addChild(new NewsSite(vec2(100, 150), vec2(screenWidth - 200, screenHeight - 200), news));
+
+        site = new NewsSite(vec2(100, 150), vec2(screenWidth - 200, screenHeight - 200), news);
+        scene.addChild(site);
         scene.addChild(new ui::Label(
             vec2(0, 40),
             vec2(screenWidth, 40),
@@ -43,6 +45,10 @@ public:
         LevelScene::onSwitchTo();
         startTime = GetTime();
         player->setPos(vec2(150, screenHeight));
+
+        global_news = News::random();
+        news = global_news;
+        site->setNews(news);
     }
 
     virtual void draw() override {
@@ -71,6 +77,7 @@ public:
 
 private:
     News news;
+    NewsSite * site = nullptr;
     double startTime;
     RenderTexture2D tex;
 };

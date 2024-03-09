@@ -17,7 +17,7 @@ using namespace bowser_util;
 constexpr float SHADOW = 10.0f;
 constexpr float GUESS_TIME = 10.0f;
 
-StreamSite::StreamSite(const Vector2 &pos, const Vector2 &size, const News &news): ui::ScrollPanel(pos, size),
+StreamSite::StreamSite(const Vector2 &pos, const Vector2 &size, News &news): ui::ScrollPanel(pos, size),
         news(news), newsQuestions(news) {
     constexpr float buttonPad = 10.0f;
     constexpr Vector2 buttonSize{800, 60};
@@ -117,6 +117,8 @@ void StreamSite::reset() {
     done = false;
     question = -1;
     timeLeft = 0.0f;
+    news = global_news;
+    newsQuestions = NewsQuestions(news);
     advanceQuestions();
 }
 
@@ -128,5 +130,5 @@ void StreamSite::correct() {
 void StreamSite::wrong() {
     std::cout << "WRONG\n";
     distortion = 1.0;
-    // incorrectTotal++;
+    incorrectTotal++;
 }

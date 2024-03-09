@@ -27,17 +27,17 @@ void shuffle2(std::vector<T> &vec) {
     std::shuffle(std::begin(vec), std::end(vec), rng);
 }
 
-NewsQuestions::NewsQuestions(const News& news): news(news) {
-    addRandomQuestionLottery();
+NewsQuestions::NewsQuestions(News& news) {
+    addRandomQuestionLottery(news);
 
     std::vector<int> tmp = hard_mode ?
         std::vector<int>({1, 2, 1, 2, 3}) :
         std::vector<int>({1, 2, 3});
     shuffle2(tmp);
     for (auto i : tmp) {
-        if (i == 1) addRandomQuestionStock();
-        if (i == 2) addRandomQuestionDisaster();
-        if (i == 3) addRandomQuestionWeather();
+        if (i == 1) addRandomQuestionStock(news);
+        if (i == 2) addRandomQuestionDisaster(news);
+        if (i == 3) addRandomQuestionWeather(news);
     }
 
     // for (auto &question : questions) {
@@ -48,7 +48,7 @@ NewsQuestions::NewsQuestions(const News& news): news(news) {
     // }
 }
 
-void NewsQuestions::addRandomQuestionStock() {
+void NewsQuestions::addRandomQuestionStock(News& news) {
     std::string goingUpCompany = "";
     int change = 0;
 
@@ -62,7 +62,7 @@ void NewsQuestions::addRandomQuestionStock() {
 
     if (goingUpCompany.size() && rand() % 2 != 0) {
         std::vector<std::string> goingDownCompanies; // Companies that arent going up
-        std::copy_if(COMPANIES.begin(), COMPANIES.end(), std::back_inserter(goingDownCompanies), [this](auto x) {
+        std::copy_if(COMPANIES.begin(), COMPANIES.end(), std::back_inserter(goingDownCompanies), [this, &news](auto x) {
             for (const auto &company : news.stonks)
                 if (company.company == x && company.change > 0)
                     return false;
@@ -135,7 +135,7 @@ void NewsQuestions::addRandomQuestionStock() {
     }
 }
 
-void NewsQuestions::addRandomQuestionDisaster() {
+void NewsQuestions::addRandomQuestionDisaster(const News& news) {
     // Which disaster will occur?
     Disaster::Category disaster1 = static_cast<Disaster::Category>(rand() % static_cast<int>(Disaster::Category::last));
     Disaster::Category disaster2 = static_cast<Disaster::Category>(rand() % static_cast<int>(Disaster::Category::last));
@@ -226,7 +226,7 @@ void NewsQuestions::addRandomQuestionDisaster() {
     }
 }
 
-void NewsQuestions::addRandomQuestionWeather() {
+void NewsQuestions::addRandomQuestionWeather(const News& news) {
     int * conditions = LoadRandomSequence(4, 0, static_cast<int>(Weather::State::last) - 1);
     int correct = static_cast<int>(news.weather.state);
     int correctIdx = -1;
@@ -260,7 +260,7 @@ void NewsQuestions::addRandomQuestionWeather() {
     UnloadRandomSequence(conditions);
 }
 
-void NewsQuestions::addRandomQuestionLottery() {
+void NewsQuestions::addRandomQuestionLottery(const News& news) {
     // Randomizations:
     // Either all
     // 1. all permutations
@@ -280,7 +280,7 @@ void NewsQuestions::addRandomQuestionLottery() {
             std::string(TextFormat("%d-%d-%d", p3[0], p3[1], p3[2])),
         });
         int correct = 0;
-        shuffle(opts, correct);
+        correct = shuffle(opts, correct);
 
         questions.push_back(Question {
             .question = "Finally, what are the winning lottery numbers?",
@@ -295,7 +295,7 @@ void NewsQuestions::addRandomQuestionLottery() {
             std::string(TextFormat("%d-%d-%d", GetRandomValue(0, 99), GetRandomValue(0, 99), GetRandomValue(0, 99))),
         });
         int correct = 0;
-        shuffle(opts, correct);
+        correct = shuffle(opts, correct);
 
         questions.push_back(Question {
             .question = "Finally, what are the winning lottery numbers?",

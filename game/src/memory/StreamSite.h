@@ -14,11 +14,13 @@ using namespace ui;
 
 class StreamSite : public ui::ScrollPanel {
 public:
-    StreamSite(const Vector2 &pos, const Vector2 &size, const News &news);
+    StreamSite(const Vector2 &pos, const Vector2 &size, News &news);
 
     void draw(const Vector2 &pos) override;
 
     void reset();
+
+    int newsQuestionsSize() const { return newsQuestions.questions.size(); }
 
     float distortion = 0.0f;
     float timeLeft = 0.0f;

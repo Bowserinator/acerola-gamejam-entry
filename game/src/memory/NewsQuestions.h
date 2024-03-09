@@ -15,15 +15,13 @@ public:
         int correctOption;
     };
 
-    NewsQuestions(const News& news);
+    NewsQuestions(News& news);
     std::vector<Question> questions;
 private:
-    News news;
-
-    void addRandomQuestionStock();
-    void addRandomQuestionDisaster();
-    void addRandomQuestionWeather();
-    void addRandomQuestionLottery();
+    void addRandomQuestionStock(News& news);
+    void addRandomQuestionDisaster(const News& news);
+    void addRandomQuestionWeather(const News& news);
+    void addRandomQuestionLottery(const News& news);
 };
 
 #endif

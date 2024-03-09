@@ -19,6 +19,16 @@ constexpr float IMAGE_HEIGHT = 70.0f;
 constexpr float SHADOW = 10.0f;
 
 NewsSite::NewsSite(const Vector2 &pos, const Vector2 &size, const News &news): ui::ScrollPanel(pos, size), news(news) {
+    setNews(news);
+}
+
+void NewsSite::setNews(const News &news) {
+    this->news = news;
+    newsAggregate.clear();
+    for (auto child : children)
+        delete child;
+    children.clear();
+
     for (auto &article : news.stonks)
         newsAggregate.push_back(AggregateNews{
             .title = article.summary,

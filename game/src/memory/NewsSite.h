@@ -17,6 +17,8 @@ public:
     NewsSite(const Vector2 &pos, const Vector2 &size, const News &news);
 
     void draw(const Vector2 &pos) override;
+
+    void setNews(const News &news);
 private:
     News news;
 

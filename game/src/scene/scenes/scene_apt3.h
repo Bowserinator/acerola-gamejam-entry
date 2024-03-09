@@ -46,7 +46,7 @@ public:
                 dialogManager.jumpToNode(1);
         };
 
-        nextScene = 3;
+        nextScene = 8;
     }
 
     virtual void draw() override {

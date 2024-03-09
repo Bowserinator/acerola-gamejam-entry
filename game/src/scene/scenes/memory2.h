@@ -10,6 +10,7 @@
 #include "../../ui/components/Label.h"
 #include "../../ui/Style.h"
 #include "../../utils/graphics.h"
+#include "victory.h"
 
 class Player;
 
@@ -21,14 +22,10 @@ public:
 
     virtual void init() override {
         LevelScene::init();
-        news = global_news;
         screenShader = LoadShader(nullptr, "resources/shaders/wrong.fs");
         shaderStrengthLoc = GetShaderLocation(screenShader, "strength");
         tex = LoadRenderTexture(screenWidth, screenHeight);
         SetTextureWrap(tex.texture, TEXTURE_WRAP_CLAMP);
-
-        site = new StreamSite(vec2(100, 150), vec2(screenWidth - 200, screenHeight - 200), news);
-        scene.addChild(site);
 
         scene.addChild(new ui::Label(
             vec2(0, 40),
@@ -44,6 +41,13 @@ public:
 
     virtual void onSwitchTo() override {
         LevelScene::onSwitchTo();
+        news = global_news;
+
+        if (!site) {
+            site = new StreamSite(vec2(100, 150), vec2(screenWidth - 200, screenHeight - 200), news);
+            scene.addChild(site);
+        }
+
         site->reset();
         player->setPos(vec2(150, screenHeight));
     }
@@ -54,8 +58,10 @@ public:
             nextScene = 10;
             animations[1].startOnce(); // Fade out
         }
-        else if (site->done && GetTime() - site->endTime > 5.0f) {
-            nextScene = hard_mode ? 7 : 6;
+        else if (site->done && GetTime() - site->endTime > 3.0f) {
+            nextScene = 11;
+            WIN_SCORE = site->correctTotal;
+            TOTAL_QUESTIONS = site->newsQuestionsSize();
             animations[1].startOnce(); // Fade out
         }
 
@@ -77,7 +83,7 @@ public:
 private:
     News news;
     Shader screenShader;
-    StreamSite * site;
+    StreamSite * site = nullptr;
     RenderTexture2D tex;
     int shaderStrengthLoc;
 };
