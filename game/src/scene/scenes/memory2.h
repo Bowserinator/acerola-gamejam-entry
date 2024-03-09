@@ -49,6 +49,11 @@ public:
     }
 
     virtual void draw() override {
+        if (site->incorrectTotal >= 3) {
+            nextScene = 10;
+            animations[1].startOnce(); // Fade out
+        }
+
         BeginTextureMode(tex);
             DrawTexturePro(NewsImageCache::ref()->desktopBackground,
                 Rectangle{0, 0, (float)NewsImageCache::ref()->desktopBackground.width, (float)NewsImageCache::ref()->desktopBackground.height },

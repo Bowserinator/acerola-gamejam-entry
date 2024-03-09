@@ -13,9 +13,6 @@ public:
     SceneApt1(Player * player): LevelScene(player) {
         camera.zoom = 2.5;
         camera.offset = vec2(0, 20);
-        player->setPos(vec2(150, 150));
-
-        hard_mode = false;
 
         const std::string NOTE_TITLE = "Note";
 
@@ -58,8 +55,6 @@ public:
                 animations[1].startOnce(); // Fade out
             }));
 
-        dialogManager.jumpToNode(1);
-
         colliders.emplace_back(0, 150, screenWidth, 100);
         colliders.emplace_back(-100, 0, 100, screenHeight);
         colliders.emplace_back(screenWidth / camera.zoom, 0, 100, screenHeight);
@@ -97,6 +92,10 @@ public:
     virtual void onSwitchTo() override {
         LevelScene::onSwitchTo();
         player->scale = 1.5f;
+        dialogManager.jumpToNode(1);
+
+        player->setPos(vec2(150, 150));
+        hard_mode = false;
     }
 private:
     bool showPrompt = false;

@@ -15,6 +15,13 @@ public:
         percent = 0.0f;
     }
 
+    void reset() {
+        percent = 0.0f;
+        duration = 1.0;
+        started = false;
+        startTime = 0.0;
+    }
+
     void startOnce() {
         if (!started)
             start();

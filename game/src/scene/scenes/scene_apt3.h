@@ -12,7 +12,6 @@ public:
     SceneApt3(Player * player): LevelScene(player) {
         camera.zoom = 2.5;
         camera.offset = vec2(0, 20);
-        player->setPos(vec2(150, 150));
 
         const std::string NOTE_TITLE = "Note";
 
@@ -25,7 +24,7 @@ public:
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(7, 8, "This is all long term predictions so there's no way that she would know unless she lived to be over a hundred.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(8, 11, "There were some aberrant time loops during this, so be consistent! Good luck")
+        dialogManager.addNode(DialogManager::Node(8, 11, "There were some aberrant time loops during this, so make sure to answer consistently! Good luck")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(11, 0, "")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR)
@@ -74,6 +73,7 @@ public:
     virtual void onSwitchTo() override {
         LevelScene::onSwitchTo();
         player->scale = 1.5f;
+        player->setPos(vec2(150, 150));
     }
 
 private:

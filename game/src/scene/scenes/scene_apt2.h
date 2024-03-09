@@ -13,10 +13,7 @@ public:
     SceneApt2(Player * player): LevelScene(player) {
         camera.zoom = 2.5;
         camera.offset = vec2(0, 20);
-        player->setPos(vec2(150, 150));
-
-        hard_mode = true;
-
+        
         const std::string NOTE_TITLE = "Note";
 
         dialogManager.addNode(DialogManager::Node(1, 2, "Huh... were these files always here.")
@@ -30,19 +27,19 @@ public:
             .addChoice("Memorize the news (starts game)", 9));
 
         // README.txt
-        dialogManager.addNode(DialogManager::Node(3, 4, "You read over the note. It's about Cassandra, and covers her monthly streaming routine.")
+        dialogManager.addNode(DialogManager::Node(3, 4, "You read over the note. It's about Cassandra's monthly streaming routine.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(4, 5, "Apparently she's only been streaming for 2 months, not counting a debut collaboration event.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(5, 100, "Why would she write this down?")
+        dialogManager.addNode(DialogManager::Node(5, 100, "I remember I tried searching for news about the event, but it was very inconsistent... almost like time is unstable.")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
     
         // README2.txt
-        dialogManager.addNode(DialogManager::Node(6, 7, "This note is from yourself. Apparently this computer was set to wipe these files on a certain date.")
+        dialogManager.addNode(DialogManager::Node(6, 7, "This note is from yourself. First, apparently files randomly get deleted over time, or perhaps they simply unexist.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(7, 8, "Furthermore, you learn your condition is called \"the oracle's curse\", which somehow must have been transferred to you.")
+        dialogManager.addNode(DialogManager::Node(7, 8, "Furthermore, you learn your condition is called \"the oracle's curse\", which must have been transferred to you by someone.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
-        dialogManager.addNode(DialogManager::Node(8, 100, "You have yet to find a cure.")
+        dialogManager.addNode(DialogManager::Node(8, 100, "An oracle's old family home burned down recently; it seems you might be able to find some information there.")
             .setTitle(NOTE_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
 
         dialogManager.addNode(DialogManager::Node(9, 0, "")
@@ -88,6 +85,8 @@ public:
     virtual void onSwitchTo() override {
         LevelScene::onSwitchTo();
         player->scale = 1.5f;
+        player->setPos(vec2(150, 150));
+        hard_mode = true;
     }
 
 private:

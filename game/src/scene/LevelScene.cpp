@@ -93,6 +93,8 @@ void LevelScene::draw() {
 
 void LevelScene::onSwitchTo() {
     player->setPos(vec2(150, 150));
+    for (auto i = 0; i < animations.size(); i++)
+        animations[i].reset();
     animations[0].start(); // Fade in
     player->velocity = vec2(0.);
     player->scale = 1.0f;

@@ -101,6 +101,9 @@ void StreamSite::reset() {
     correctTotal = incorrectTotal = 0;
     distortion = 0.0f;
     done = false;
+    question = -1;
+    timeLeft = 0.0f;
+    advanceQuestions();
 }
 
 void StreamSite::correct() {
