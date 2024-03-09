@@ -9,6 +9,10 @@
 #include "../../ui/Style.h"
 #include "../../memory/News.h"
 
+#include <string>
+
+inline std::string GAMEOVER_REASON2;
+
 class GameoverScene2: public LevelScene {
 public:
     GameoverScene2(Player * player): LevelScene(player) {
@@ -20,6 +24,7 @@ public:
         LevelScene::onSwitchTo();
         player->setPos(vec2(0, 10000));
         animations[2].startOnce();
+        label2->setText(GAMEOVER_REASON2);
     }
 
     virtual void draw() override {
@@ -31,10 +36,11 @@ public:
             animations[4].startOnce();
 
         label1->style.textColor.a = (unsigned char)(animations[2].progress() * 255);
-        label2->style.textColor.a = (unsigned char)(animations[3].progress() * 255);
+        label2->style.textColor.a = (unsigned char)(animations[2].progress() * 255);
+        label3->style.textColor.a = (unsigned char)(animations[3].progress() * 255);
 
         if (IsKeyPressed(KEY_X)) {
-            nextScene = hard_mode ? 6 : 5;
+            nextScene = 8;
             animations[1].startOnce(); // Fade out
         }
     }
@@ -54,19 +60,27 @@ public:
                 .setAllTextColors(RED)
         );
         label2 = new ui::Label(
+            vec2(0, screenHeight / 3),
+            vec2(screenWidth, 40),
+            "Placeholder reason",
+            (ui::Style { .horizontalAlign = Style::Align::Center })
+                .setAllTextColors(RED)
+        );
+        label3 = new ui::Label(
             vec2(0, screenHeight * 0.8),
             vec2(screenWidth, 40),
-            "You answered incorrectly. Press X to restart",
+            "Press X to restart",
             (ui::Style { .horizontalAlign = Style::Align::Center })
                 .setAllTextColors(WHITE)
         );
 
         scene.addChild(label1);
         scene.addChild(label2);
+        scene.addChild(label3);
     };
 
 private:
-    ui::Label * label1, * label2;
+    ui::Label * label1, * label2, * label3;
 };
 
 

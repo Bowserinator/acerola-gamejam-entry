@@ -50,6 +50,11 @@ public:
     }
 
     virtual void draw() override {
+        if (site->incorrectTotal > 0) {
+            nextScene = 12;
+            animations[1].startOnce(); // Fade out
+        }
+
         label->setText(TextFormat("Streaming... answer the questions consistently! [%d / 40]", site->question));
 
         BeginTextureMode(tex);

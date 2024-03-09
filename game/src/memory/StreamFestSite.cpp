@@ -7,6 +7,7 @@
 #include "../utils/text_wrap.h"
 #include "../utils/types/vector.h"
 #include "../config.h"
+#include "../scene/scenes/gameover2.h"
 #include "NewsImages.h"
 
 #include <random>
@@ -162,6 +163,8 @@ void StreamFestSite::draw(const Vector2 &pos) {
     if (timeLeft > 0.0f && !done) {
         timeLeft -= GetFrameTime();
         if (timeLeft < 0.0f) {
+            if (incorrectTotal == 0)
+                GAMEOVER_REASON2 = "You didn't answer in time.";
             wrong();
             advanceQuestions();
         }
@@ -211,8 +214,11 @@ void StreamFestSite::advanceQuestions() {
             auto itr = playerChoices.find(question.id);
             if (itr == playerChoices.end() || itr->second == option)
                 correct();
-            else
+            else {
+                if (incorrectTotal == 0)
+                    GAMEOVER_REASON2 = "You initially answered '" + itr->second + "'";
                 wrong();
+            }
             playerChoices[question.id] = option;
             advanceQuestions();
         });
@@ -225,7 +231,9 @@ void StreamFestSite::reset() {
     distortion = 0.0f;
     playerChoices.clear();
     done = false;
+    question = -1;
     prevQuestionId = -1;
+    advanceQuestions();
 }
 
 void StreamFestSite::correct() {

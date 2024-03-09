@@ -10,6 +10,7 @@
 #include "scenes/memory3.h"
 #include "scenes/introscene.h"
 #include "scenes/gameover1.h"
+#include "scenes/gameover2.h"
 #include "scenes/victory.h"
 
 LevelSceneManager::LevelSceneManager() {
@@ -25,6 +26,7 @@ LevelSceneManager::LevelSceneManager() {
     scenes.push_back(new IntroScene(&player)); // 9
     scenes.push_back(new GameoverScene1(&player)); // 10
     scenes.push_back(new VictoryScene(&player)); // 11
+    scenes.push_back(new GameoverScene2(&player)); // 12
 }
 
 LevelSceneManager::~LevelSceneManager() {
