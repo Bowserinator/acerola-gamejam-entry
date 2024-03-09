@@ -20,6 +20,7 @@ public:
     Texture Xprompt;
     Texture chatTexture;
     Texture interactTexture;
+    Texture streamStart;
 
     Shader screenShader;
     int screenShaderResolutionLocation;

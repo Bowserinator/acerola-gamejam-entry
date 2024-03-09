@@ -23,6 +23,7 @@ public:
     float distortion = 0.0f;
     float timeLeft = 0.0f;
     bool done = false;
+    double endTime = 0.0;
 
     int correctTotal;
     int incorrectTotal;

@@ -59,12 +59,25 @@ void StreamSite::draw(const Vector2 &pos) {
 
     const float headerHeight = NewsImageCache::ref()->browserHeader.height;
     DrawRectangle(pos.x + SHADOW, pos.y + SHADOW - headerHeight, size.x, size.y + headerHeight, Color{0, 0, 0, 128});
+    
     DrawRectangle(pos.x, pos.y, size.x, size.y, Color{20, 20, 20, 255});
-    DrawTexture(NewsImageCache::ref()->browserHeader, pos.x, pos.y - headerHeight, WHITE);
+    if (done) {
+        DrawTexture(NewsImageCache::ref()->streamStart, pos.x, pos.y, WHITE);
 
+        int seconds = (int)(GetTime() - endTime);
+        std::string time = seconds % 60 < 10 ?
+            TextFormat("%d:0%d", seconds / 60, seconds % 60) :
+            TextFormat("%d:%d", seconds / 60, seconds % 60);
+        auto textSize = MeasureTextEx(FontCache::ref()->main_font, time.c_str(), 1.5f * FONT_SIZE, 0.0f);
+        DrawTextEx(FontCache::ref()->main_font, time.c_str(),
+            Vector2{ pos.x + size.x / 2 - textSize.x / 2, pos.y + size.y * 0.86f }, 1.5f * FONT_SIZE, 0.0f, WHITE);
+    }
+
+    DrawTexture(NewsImageCache::ref()->browserHeader, pos.x, pos.y - headerHeight, WHITE);
     DrawRectangle(pos.x, pos.y, size.x * timeLeft / GUESS_TIME, 10.0f, WHITE);
 
-    ui::ScrollPanel::draw(pos);
+    if (!done)
+        ui::ScrollPanel::draw(pos);
 }
 
 void StreamSite::advanceQuestions() {
@@ -75,7 +88,8 @@ void StreamSite::advanceQuestions() {
             btn->hide()->disable();
         questionLabel->setText("OVER!");
         timeLeft = 0.0f;
-        return; // TODO win screen
+        endTime = GetTime();
+        return;
     }
 
     timeLeft = GUESS_TIME;
@@ -114,5 +128,5 @@ void StreamSite::correct() {
 void StreamSite::wrong() {
     std::cout << "WRONG\n";
     distortion = 1.0;
-    incorrectTotal++;
+    // incorrectTotal++;
 }

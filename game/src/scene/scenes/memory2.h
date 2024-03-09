@@ -49,8 +49,13 @@ public:
     }
 
     virtual void draw() override {
+        LevelScene::draw();
         if (site->incorrectTotal >= 3) {
             nextScene = 10;
+            animations[1].startOnce(); // Fade out
+        }
+        else if (site->done && GetTime() - site->endTime > 5.0f) {
+            nextScene = hard_mode ? 7 : 6;
             animations[1].startOnce(); // Fade out
         }
 
