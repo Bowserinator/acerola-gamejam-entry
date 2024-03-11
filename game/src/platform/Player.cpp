@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../config.h"
 #include "../event/EventBuffer.h"
+#include "../event/SoundCache.h"
 
 #include <iostream>
 
@@ -58,6 +59,17 @@ void Player::tick(float dt) {
         velocity.x *= friction;
     } else {
         velocity *= frictionAir;
+    }
+
+    // Footstep noises
+    if (std::abs(velocity.x) > 0.1f) {
+        if (!IsSoundPlaying(SoundCache::ref()->footsteps))
+            PlaySound(SoundCache::ref()->footsteps);
+        else
+            ResumeSound(SoundCache::ref()->footsteps);
+    } else {
+        if (IsSoundPlaying(SoundCache::ref()->footsteps))
+            PauseSound(SoundCache::ref()->footsteps);
     }
 
     onGround = false;

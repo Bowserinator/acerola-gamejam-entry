@@ -71,6 +71,7 @@ public:
             style
         ))->setClickCallback([this]() {
             nextScene = 0;
+            PlaySound(SoundCache::ref()->click);
             animations[1].startOnce(); // Fade out
         }));
 
@@ -81,6 +82,7 @@ public:
             style
         ))->setClickCallback([this]() {
             nextScene = 5;
+            PlaySound(SoundCache::ref()->click);
             animations[1].startOnce(); // Fade out
         }));
 
@@ -91,6 +93,7 @@ public:
             style
         ))->setClickCallback([this]() {
             nextScene = 6;
+            PlaySound(SoundCache::ref()->click);
             animations[1].startOnce(); // Fade out
         }));
 
@@ -101,6 +104,7 @@ public:
             style
         ))->setClickCallback([this]() {
             nextScene = 7;
+            PlaySound(SoundCache::ref()->click);
             animations[1].startOnce(); // Fade out
         }));
 
@@ -110,6 +114,7 @@ public:
             "Quit",
             style
         ))->setClickCallback([this]() {
+            PlaySound(SoundCache::ref()->click);
             CloseAudioDevice();
             CloseWindow();
             std::exit(0);

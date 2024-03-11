@@ -7,6 +7,7 @@
 
 #include "event/EventBuffer.h"
 #include "event/FontCache.h"
+#include "event/SoundCache.h"
 #include "memory/NewsImages.h"
 
 #include "platform/Player.h"
@@ -39,6 +40,7 @@ int main(void) {
     InitAudioDevice();
     NewsImageCache::ref()->init();
     FontCache::ref()->init();
+    SoundCache::ref()->init();
 
     manager.init();
     manager.switchScene(13);

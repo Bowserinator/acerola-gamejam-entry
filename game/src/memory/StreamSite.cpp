@@ -7,6 +7,7 @@
 #include "../utils/text_wrap.h"
 #include "../utils/types/vector.h"
 #include "../config.h"
+#include "../event/SoundCache.h"
 #include "NewsImages.h"
 
 #include <random>
@@ -123,12 +124,12 @@ void StreamSite::reset() {
 }
 
 void StreamSite::correct() {
-    std::cout << "CORRECT\n";
+    PlaySound(SoundCache::ref()->correct);
     correctTotal++;
 }
 
 void StreamSite::wrong() {
-    std::cout << "WRONG\n";
     distortion = 1.0;
+    PlaySound(SoundCache::ref()->wrong);
     incorrectTotal++;
 }

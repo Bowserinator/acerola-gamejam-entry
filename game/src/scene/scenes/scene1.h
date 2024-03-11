@@ -4,6 +4,7 @@
 #include "../LevelScene.h"
 #include "../../config.h"
 #include "../../memory/NewsImages.h"
+#include "../../event/SoundCache.h"
 
 class Player;
 
@@ -42,6 +43,8 @@ public:
         dialogManager.addNode(DialogManager::Node(12, 0, "")
             .setOnActive([this](DialogManager::Node&) {
                 animations[1].startOnce(); // Fade out
+                PlaySound(SoundCache::ref()->car);
+                StopSound(SoundCache::ref()->night);
             }));
         dialogManager.jumpToNode(1);
 
@@ -57,6 +60,12 @@ public:
         };
 
         lightMapId = 2;
+    }
+
+    virtual void onSwitchTo() override {
+        LevelScene::onSwitchTo();
+        PlaySound(SoundCache::ref()->horn);
+        PlaySound(SoundCache::ref()->night);
     }
 
     virtual void draw() override {

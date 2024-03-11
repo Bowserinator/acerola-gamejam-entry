@@ -5,6 +5,7 @@
 #include "../event/FontCache.h"
 #include "../ui/Style.h"
 #include "../memory/NewsImages.h"
+#include "../event/SoundCache.h"
 
 #include <cmath>
 #include <iostream>
@@ -28,6 +29,12 @@ void DialogBox::tick(float dt) {
     textPercent += 48.0f / std::max((int)text.size(), 1) * dt;
     if (textPercent > 1.0f)
         textPercent = 1.0f;
+    else {
+        if (!IsSoundPlaying(SoundCache::ref()->chatBeep)) {
+            SetSoundPitch(SoundCache::ref()->chatBeep, GetRandomValue(98, 102) / 100.0f);
+            PlaySound(SoundCache::ref()->chatBeep);
+        }
+    }
 
     if (textPercent == 1.0f) {
         for (auto child : children) {

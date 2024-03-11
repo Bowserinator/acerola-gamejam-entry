@@ -5,6 +5,7 @@
 #include "InteractiveComponent.h"
 #include "../../Style.h"
 #include "../../styles.h"
+#include "../../../event/SoundCache.h"
 #include <functional>
 
 namespace ui {
@@ -17,6 +18,7 @@ namespace ui {
         void draw(const Vector2 &screenPos) override;
 		void onMouseEnter(Vector2 localPos) override {
             InteractiveComponent::onMouseEnter(localPos);
+            PlaySound(SoundCache::ref()->buttonHover);
             if (!disabled) enterCallback();
         }
 		void onMouseClick(Vector2 localPos, unsigned button) override {

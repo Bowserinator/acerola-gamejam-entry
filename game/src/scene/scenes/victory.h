@@ -8,6 +8,7 @@
 #include "../../ui/components/Label.h"
 #include "../../ui/Style.h"
 #include "../../memory/News.h"
+#include "../../event/SoundCache.h"
 #include <string>
 #include <iostream>
 
@@ -27,6 +28,7 @@ public:
         LevelScene::onSwitchTo();
         player->setPos(vec2(0, 10000));
         animations[2].startOnce();
+        PlaySound(SoundCache::ref()->yay);
     }
 
     virtual void draw() override {

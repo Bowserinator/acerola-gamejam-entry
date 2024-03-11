@@ -10,6 +10,7 @@
 #include "../../ui/components/Label.h"
 #include "../../ui/Style.h"
 #include "../../utils/graphics.h"
+#include "../../event/SoundCache.h"
 
 class Player;
 
@@ -52,6 +53,9 @@ public:
     }
 
     virtual void draw() override {
+        if (!IsSoundPlaying(SoundCache::ref()->tick))
+            PlaySound(SoundCache::ref()->tick);
+
         double timeLeftPercent = 1.0 - std::min(1.0, (GetTime() - startTime) / TIME_GIVEN);
         if (timeLeftPercent <= 0.0f || IsKeyPressed(KEY_X)) {
             nextScene = 4;
