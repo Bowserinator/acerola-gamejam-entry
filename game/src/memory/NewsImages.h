@@ -22,6 +22,9 @@ public:
     Texture interactTexture;
     Texture streamStart;
 
+    Texture title;
+    Texture titleBg;
+
     Shader screenShader;
     int screenShaderResolutionLocation;
 

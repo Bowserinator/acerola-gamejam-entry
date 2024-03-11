@@ -194,7 +194,7 @@ void StreamFestSite::advanceQuestions() {
     timeLeft = GUESS_TIME;
 
     SQuestion &question = QUESTIONS[rand() % QUESTIONS.size()];
-    while (question.id == prevQuestionId)
+    while (question.id == prevQuestionId) // Don't pick same question twice
         question = QUESTIONS[rand() % QUESTIONS.size()];
 
     prevQuestionId = question.id;

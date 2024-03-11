@@ -29,6 +29,8 @@ void NewsImageCache::init() {
     outsideLights = loadImg("resources/img/outside-lights.png");
     interactTexture = loadImg("resources/img/interact.png");
     streamStart = loadImg("resources/img/stream-start.png");
+    title = loadImg("resources/img/title.png");
+    titleBg = loadImg("resources/img/title-bg.png");
 
     screenShader = LoadShader(nullptr, "resources/shaders/screen.fs");
     screenShaderResolutionLocation = GetShaderLocation(screenShader, "resolution");
@@ -50,6 +52,8 @@ NewsImageCache::~NewsImageCache() {
     UnloadTexture(apartmentLights);
     UnloadTexture(interactTexture);
     UnloadTexture(streamStart);
+    UnloadTexture(title);
+    UnloadTexture(titleBg);
     UnloadShader(screenShader);
     UnloadTexture(outsideLights);
 }

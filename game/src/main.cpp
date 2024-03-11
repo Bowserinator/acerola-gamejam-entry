@@ -41,7 +41,7 @@ int main(void) {
     FontCache::ref()->init();
 
     manager.init();
-    manager.switchScene(7);
+    manager.switchScene(13);
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, FPS, 1);
