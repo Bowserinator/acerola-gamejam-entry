@@ -63,6 +63,15 @@ void NewsSite::setNews(const News &news) {
         .imageIdx = static_cast<int>(news.weather.state)
     });
 
+    if (hard_mode) { // Easter egg
+        newsAggregate.push_back(AggregateNews{
+            .title = "New theory confirms cyclic cosmology",
+            .subtitle = "The universe will contract, and time will reverse, scientist says.",
+            .image = &NewsImageCache::ref()->scienceImages,
+            .imageIdx = 0
+        });
+    }
+
     auto rd = std::random_device {}; 
     auto rng = std::default_random_engine { rd() };
     std::shuffle(std::begin(newsAggregate), std::end(newsAggregate), rng);

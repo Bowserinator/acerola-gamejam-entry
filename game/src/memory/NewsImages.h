@@ -9,6 +9,7 @@ public:
     Texture weatherImages;
     Texture stonkImages;
     Texture lotteryImage;
+    Texture scienceImages;
 
     Texture siteTitleImage;
     Texture browserHeader;

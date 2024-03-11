@@ -18,6 +18,7 @@ void NewsImageCache::init() {
     weatherImages = loadImg("resources/img/weather.png");
     stonkImages = loadImg("resources/img/stonks.png");
     lotteryImage = loadImg("resources/img/lottery.png");
+    scienceImages = loadImg("resources/img/science.png");
 
     siteTitleImage = loadImg("resources/img/site-title.png");
     browserHeader = loadImg("resources/img/window-header.png");
