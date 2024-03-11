@@ -56,6 +56,9 @@ public:
                 animations[1].startOnce(); // Fade out
             }));
 
+        dialogManager.addNode(DialogManager::Node(200, 0, "No matter how hard you try, jumping from ground level to the 4th floor is impossible.")
+            .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
+
         colliders.emplace_back(0, 150, screenWidth, 100);
         colliders.emplace_back(-100, 0, 100, screenHeight);
         colliders.emplace_back(screenWidth / camera.zoom, 0, 100, screenHeight);
@@ -64,6 +67,13 @@ public:
             showPrompt = true;
             if (IsKeyPressed(KEY_X) && dialogBox->getHidden())
                 dialogManager.jumpToNode(3);
+        };
+
+        interactiveColliders.emplace_back(screenWidth * 0.8f / camera.zoom, 0, 70, screenHeight);
+        interactiveColliders[1].onCollide = [this](const CollisionBox&) {
+            showPrompt2 = true;
+            if (IsKeyPressed(KEY_X) && dialogBox->getHidden())
+                dialogManager.jumpToNode(200);
         };
 
         nextScene = 3;
@@ -81,11 +91,18 @@ public:
                 Vector2{ screenWidth / 2 / camera.zoom - 10, 100 },
                 0.0, 0.8f / camera.zoom, WHITE
             );
+        if (showPrompt2)
+            DrawTextureEx(
+                    NewsImageCache::ref()->interactTexture,
+                    Vector2{ screenWidth * 0.85f / camera.zoom - 10, 100 },
+                    0.0, 0.8f / camera.zoom, WHITE
+                );
         EndMode2D();
         
         LevelScene::draw();
 
         showPrompt = false;
+        showPrompt2 = false;
     }
 
     virtual void init() override {
@@ -103,6 +120,7 @@ public:
     }
 private:
     bool showPrompt = false;
+    bool showPrompt2 = false;
 };
 
 #endif
