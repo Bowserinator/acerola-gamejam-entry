@@ -52,6 +52,7 @@ public:
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(16, 0, "")
             .setOnActive([this](DialogManager::Node&) {
+                StopMusicStream(SoundCache::ref()->bgMusic);
                 animations[1].startOnce(); // Fade out
             }));
 
@@ -70,6 +71,8 @@ public:
     }
 
     virtual void draw() override {
+        UpdateMusicStream(SoundCache::ref()->bgMusic);
+
         BeginMode2D(camera);
         DrawTexture(NewsImageCache::ref()->apartmentBackground, 0, 10, WHITE);
         if (showPrompt)
@@ -96,6 +99,7 @@ public:
 
         player->setPos(vec2(150, 150));
         hard_mode = false;
+        PlayMusicStream(SoundCache::ref()->bgMusic);
     }
 private:
     bool showPrompt = false;

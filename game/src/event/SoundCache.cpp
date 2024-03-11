@@ -17,6 +17,13 @@ void SoundCache::init() {
     night = LoadSound("resources/sounds/night-ambiance.mp3");
     car = LoadSound("resources/sounds/car.mp3");
 
+    title = LoadMusicStream("resources/music/title.mp3");
+    bgMusic = LoadMusicStream("resources/music/betterdays.mp3");
+    title.looping = true;
+    bgMusic.looping = true;
+    SetMusicVolume(title, 1.2);
+    SetMusicVolume(bgMusic, 0.2);
+
     SetSoundVolume(correct, 1.1);
 
     _init = true;

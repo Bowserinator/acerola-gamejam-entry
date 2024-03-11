@@ -35,6 +35,7 @@ public:
         dialogManager.addNode(DialogManager::Node(9, 0, "")
             .setOnActive([this](DialogManager::Node&){
                 dialogManager.jumpToNode(0);
+                StopMusicStream(SoundCache::ref()->bgMusic);
                 animations[1].startOnce(); // Fade out
             }));
 
@@ -52,6 +53,8 @@ public:
     }
 
     virtual void draw() override {
+        UpdateMusicStream(SoundCache::ref()->bgMusic);
+        
         BeginMode2D(camera);
         DrawTexture(NewsImageCache::ref()->apartmentBackground, 0, 10, WHITE);
         if (showPrompt)
@@ -76,6 +79,7 @@ public:
         LevelScene::onSwitchTo();
         player->scale = 1.5f;
         player->setPos(vec2(150, 150));
+        PlayMusicStream(SoundCache::ref()->bgMusic);
     }
 
 private:

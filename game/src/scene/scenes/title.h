@@ -10,6 +10,7 @@
 #include "../../ui/Style.h"
 #include "../../memory/NewsImages.h"
 #include "../../utils/graphics.h"
+#include "../../event/SoundCache.h"
 #include <iostream>
 
 class TitleScene1: public LevelScene {
@@ -23,9 +24,12 @@ public:
         LevelScene::onSwitchTo();
         player->setPos(vec2(0, 10000));
         animations[2].startOnce();
+        PlayMusicStream(SoundCache::ref()->title);
     }
 
     virtual void draw() override {
+        UpdateMusicStream(SoundCache::ref()->title);
+
         BeginMode2D(camera);
         bowser_util::setShaderValue(shader, timeLoc, (float)GetTime());
         BeginShaderMode(shader);
@@ -72,6 +76,7 @@ public:
         ))->setClickCallback([this]() {
             nextScene = 0;
             PlaySound(SoundCache::ref()->click);
+            StopMusicStream(SoundCache::ref()->title);
             animations[1].startOnce(); // Fade out
         }));
 
@@ -83,6 +88,7 @@ public:
         ))->setClickCallback([this]() {
             nextScene = 5;
             PlaySound(SoundCache::ref()->click);
+            StopMusicStream(SoundCache::ref()->title);
             animations[1].startOnce(); // Fade out
         }));
 
@@ -94,6 +100,7 @@ public:
         ))->setClickCallback([this]() {
             nextScene = 6;
             PlaySound(SoundCache::ref()->click);
+            StopMusicStream(SoundCache::ref()->title);
             animations[1].startOnce(); // Fade out
         }));
 
@@ -105,6 +112,7 @@ public:
         ))->setClickCallback([this]() {
             nextScene = 7;
             PlaySound(SoundCache::ref()->click);
+            StopMusicStream(SoundCache::ref()->title);
             animations[1].startOnce(); // Fade out
         }));
 
@@ -115,6 +123,7 @@ public:
             style
         ))->setClickCallback([this]() {
             PlaySound(SoundCache::ref()->click);
+            StopMusicStream(SoundCache::ref()->title);
             CloseAudioDevice();
             CloseWindow();
             std::exit(0);

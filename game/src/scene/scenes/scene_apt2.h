@@ -16,7 +16,9 @@ public:
         
         const std::string NOTE_TITLE = "Note";
 
-        dialogManager.addNode(DialogManager::Node(1, 2, "Huh... were these files always here.")
+        dialogManager.addNode(DialogManager::Node(1, 121, "These streams are so depressing... not even chat is enabled.")
+            .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
+        dialogManager.addNode(DialogManager::Node(121, 2, "Huh... were these files always here.")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(2, 100, "It's more notes... which one should I open?")
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
@@ -45,6 +47,7 @@ public:
         dialogManager.addNode(DialogManager::Node(9, 0, "")
             .setOnActive([this](DialogManager::Node&){
                 dialogManager.jumpToNode(0);
+                StopMusicStream(SoundCache::ref()->bgMusic);
                 animations[1].startOnce(); // Fade out
             }));
 
@@ -63,6 +66,8 @@ public:
     }
 
     virtual void draw() override {
+        UpdateMusicStream(SoundCache::ref()->bgMusic);
+        
         BeginMode2D(camera);
         DrawTexture(NewsImageCache::ref()->apartmentBackground, 0, 10, WHITE);
         if (showPrompt)
@@ -87,6 +92,7 @@ public:
         player->scale = 1.5f;
         player->setPos(vec2(150, 150));
         hard_mode = true;
+        PlayMusicStream(SoundCache::ref()->bgMusic);
     }
 
 private:

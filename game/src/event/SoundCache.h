@@ -7,6 +7,8 @@ class SoundCache {
 public:
     Sound buttonHover, chatBeep, click, correct, wrong, yay, tick, footsteps, horn, night, car;
 
+    Music title, bgMusic;
+
     SoundCache(SoundCache &other) = delete;
     void operator=(const SoundCache&) = delete;
     ~SoundCache();
