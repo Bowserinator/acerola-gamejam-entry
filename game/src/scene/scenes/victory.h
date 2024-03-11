@@ -9,6 +9,8 @@
 #include "../../ui/Style.h"
 #include "../../memory/News.h"
 #include "../../event/SoundCache.h"
+#include "../../particle/Particle.h"
+
 #include <string>
 #include <iostream>
 
@@ -29,10 +31,32 @@ public:
         player->setPos(vec2(0, 10000));
         animations[2].startOnce();
         PlaySound(SoundCache::ref()->yay);
+
+        parts.particles.clear();
+        Color colors[] = { RED, GREEN, ORANGE, BLUE, YELLOW, PURPLE };
+
+        for (int i = 0; i < 30; i++) {
+            parts.particles.emplace_back(
+                GetRandomValue(2, 5),
+                colors[rand() % 6],
+                vec2(10, screenHeight - 10),
+                GetRandomValue(20, 40) * vec2(1, -1).rotate(GetRandomValue(-15, 15) * DEG2RAD),
+                1.0f, 200.0f
+            );
+            parts.particles.emplace_back(
+                GetRandomValue(2, 5),
+                colors[rand() % 6],
+                vec2(screenWidth - 10, screenHeight - 10),
+                GetRandomValue(20, 40) * vec2(-1, -1).rotate(GetRandomValue(-15, 15) * DEG2RAD),
+                1.0f, 200.0f
+            );
+        }
     }
 
     virtual void draw() override {
+        parts.tick();
         LevelScene::draw();
+        parts.draw();
 
         if (animations[2].progress() == 1.0f)
             animations[3].startOnce();
@@ -77,6 +101,7 @@ public:
 
 private:
     ui::Label * label1, * label2;
+    ParticleManager parts;
 };
 
 #endif
