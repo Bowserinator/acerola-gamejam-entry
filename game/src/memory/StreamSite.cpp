@@ -82,6 +82,8 @@ void StreamSite::draw(const Vector2 &pos) {
 }
 
 void StreamSite::advanceQuestions() {
+    if (incorrectTotal >= 3) return;
+
     question++;
     if (question >= newsQuestions.questions.size()) {
         done = true;

@@ -181,6 +181,8 @@ void StreamFestSite::draw(const Vector2 &pos) {
 }
 
 void StreamFestSite::advanceQuestions() {
+    if (incorrectTotal >= 1) return;
+
     question++;
     if (question >= MAX_QUESTIONS) {
         done = true;

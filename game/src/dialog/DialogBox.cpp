@@ -90,8 +90,11 @@ std::string DialogBox::getDisplayText() const {
 
 void DialogBox::onMouseClick(Vector2 localPos, unsigned button) {
     ui::Panel::onMouseClick(localPos, button);
-    if (button == MOUSE_BUTTON_LEFT)
-        parentManager->advance();
+    if (button == MOUSE_BUTTON_LEFT) {
+        if (!shouldIgnoreClick)
+            parentManager->advance();
+        shouldIgnoreClick = false;
+    }
 }
 
 void DialogBox::clearChildren() {
@@ -115,6 +118,7 @@ void DialogBox::addChoices() {
         ))->setClickCallback([this, &choice]() {
             if (!parentManager) throw std::runtime_error("Parent manager was null in DialogBox\n");
             parentManager->jumpToNode(choice.second);
+            shouldIgnoreClick = true;
         })->hide()->disable();
         addChild(btn);
         i++;

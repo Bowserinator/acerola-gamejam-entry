@@ -50,6 +50,7 @@ private:
     ChoiceVector choices;
     DialogManager * parentManager = nullptr;
     bool reversed = false;
+    bool shouldIgnoreClick = false;
 
     // Get the actual text to display (not 100% revealed)
     std::string getDisplayText() const;

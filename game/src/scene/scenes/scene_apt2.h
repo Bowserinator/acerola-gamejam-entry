@@ -57,7 +57,7 @@ public:
         interactiveColliders.emplace_back(screenWidth / 2 / camera.zoom, 0, 100, screenHeight);
         interactiveColliders[0].onCollide = [this](const CollisionBox&) {
             showPrompt = true;
-            if (IsKeyPressed(KEY_X) && dialogBox->getHidden())
+            if (IsKeyPressed(KEY_X) && dialogBox->getHidden() && animations[1].progress() == 0.0f)
                 dialogManager.jumpToNode(1);
         };
 

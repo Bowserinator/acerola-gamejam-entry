@@ -41,6 +41,7 @@ int main(void) {
     NewsImageCache::ref()->init();
     FontCache::ref()->init();
     SoundCache::ref()->init();
+    SetExitKey(KEY_NULL);
 
     manager.init();
     manager.switchScene(13);
