@@ -49,6 +49,7 @@ public:
     }
 
     virtual void draw() override {
+        UpdateMusicStream(SoundCache::ref()->endMusic);
         player->setPos(vec2(150, 122));
         player->velocity = vec2(0);
         BeginMode2D(camera);
@@ -74,6 +75,7 @@ public:
             if (IsKeyPressed(KEY_X)) {
                 nextScene = 13; // title screen
                 animations[1].startOnce(); // Fade out
+                StopMusicStream(SoundCache::ref()->endMusic);
             }
         }
     }
@@ -94,6 +96,7 @@ public:
     virtual void onSwitchTo() override {
         LevelScene::onSwitchTo();
         player->scale = 1.3f;
+        PlayMusicStream(SoundCache::ref()->endMusic);
     }
 
 private:

@@ -16,15 +16,17 @@ void SoundCache::init() {
     horn = LoadSound("resources/sounds/horn.mp3");
     night = LoadSound("resources/sounds/night-ambiance.mp3");
     car = LoadSound("resources/sounds/car.mp3");
+    SetSoundVolume(correct, 1.1);
 
     title = LoadMusicStream("resources/music/title.mp3");
     bgMusic = LoadMusicStream("resources/music/betterdays.mp3");
+    endMusic = LoadMusicStream("resources/music/end.mp3");
     title.looping = true;
     bgMusic.looping = true;
+    endMusic.looping = true;
     SetMusicVolume(title, 2.7);
     SetMusicVolume(bgMusic, 0.2);
-
-    SetSoundVolume(correct, 1.1);
+    SetMusicVolume(endMusic, 0.5);
 
     _init = true;
 }
