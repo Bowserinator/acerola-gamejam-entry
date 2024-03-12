@@ -7,7 +7,7 @@
 class Animation {
 public:
     Animation() {}
-    Animation(float duration): duration(duration) {}
+    Animation(float duration): duration(duration), orgDuration(duration) {}
 
     void start() {
         startTime = GetTime();
@@ -17,7 +17,7 @@ public:
 
     void reset() {
         percent = 0.0f;
-        duration = 1.0;
+        duration = orgDuration;
         started = false;
         startTime = 0.0;
     }
@@ -35,6 +35,8 @@ public:
         return started ? easingFunction(percent) : 0.0f;
     }
 
+    float getDuration() const { return duration; }
+
     Animation& setEasingFunction(std::function<float(float)> easingFunction) {
         this->easingFunction = easingFunction;
         return *this;
@@ -44,6 +46,7 @@ public:
 private:
     float percent = 0.0; // Raw uneased completion percentage 0-1
     float duration = 1.0;
+    float orgDuration = 1.0;
     bool started = false;
     double startTime = 0.0;
 };

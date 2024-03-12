@@ -44,7 +44,7 @@ int main(void) {
     SetExitKey(KEY_NULL);
 
     manager.init();
-    manager.switchScene(13);
+    manager.switchScene(14);
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, FPS, 1);

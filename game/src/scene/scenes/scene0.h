@@ -3,8 +3,7 @@
 
 #include "../LevelScene.h"
 #include "../../config.h"
-
-class Player;
+#include "../../platform/Player.h"
 
 class Scene0: public LevelScene {
 public:

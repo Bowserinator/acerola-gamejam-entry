@@ -5,8 +5,7 @@
 #include "../../config.h"
 #include "../../memory/NewsImages.h"
 #include "../../event/SoundCache.h"
-
-class Player;
+#include "../../platform/Player.h"
 
 class Scene1: public LevelScene {
 public:

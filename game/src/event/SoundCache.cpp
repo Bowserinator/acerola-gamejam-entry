@@ -21,7 +21,7 @@ void SoundCache::init() {
     bgMusic = LoadMusicStream("resources/music/betterdays.mp3");
     title.looping = true;
     bgMusic.looping = true;
-    SetMusicVolume(title, 1.2);
+    SetMusicVolume(title, 2.7);
     SetMusicVolume(bgMusic, 0.2);
 
     SetSoundVolume(correct, 1.1);

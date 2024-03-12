@@ -115,7 +115,7 @@ void DialogBox::addChoices() {
                 .horizontalAlign = ui::Style::Align::Left,
                 .borderColor = BLACK
             }
-        ))->setClickCallback([this, &choice]() {
+        ))->setClickCallback([this, choice]() {
             if (!parentManager) throw std::runtime_error("Parent manager was null in DialogBox\n");
             parentManager->jumpToNode(choice.second);
             shouldIgnoreClick = true;

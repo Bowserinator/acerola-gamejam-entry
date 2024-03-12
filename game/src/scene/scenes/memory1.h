@@ -11,8 +11,7 @@
 #include "../../ui/Style.h"
 #include "../../utils/graphics.h"
 #include "../../event/SoundCache.h"
-
-class Player;
+#include "../../platform/Player.h"
 
 constexpr double TIME_GIVEN = 60.0;
 
