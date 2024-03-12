@@ -125,6 +125,89 @@ std::vector<SQuestion> QUESTIONS({
             "100 years", "200+ years"
         }),
         .id = 13
+    },
+    {
+        .question = "What job will make the most money in 2100?",
+        .choices = std::vector<std::string>({
+            "Nanoengineer", "Prompt Engineer",
+            "Biohacker", "Asteroid Miner"
+        }),
+        .id = 14
+    },
+    {
+        .question = "How many global recessions will occur between now and 2100?",
+        .choices = std::vector<std::string>({
+            "0", "1",
+            "2+", "3 or more"
+        }),
+        .id = 15
+    },
+    {
+        .question = "When will WWIII occur?",
+        .choices = std::vector<std::string>({
+            "2025-2035", "2036-2050",
+            "2050-2100", "2100+"
+        }),
+        .id = 16
+    },
+    {
+        .question = "What is chat's favorite color?",
+        .choices = std::vector<std::string>({
+            "Green", "Red",
+            "Blue", "White"
+        }),
+        .id = 17
+    },
+    {
+        .question = "How many entries will Spaderola Jam 15 have?",
+        .choices = std::vector<std::string>({
+            "0-300", "300-900",
+            "900-2000", "2000+"
+        }),
+        .id = 18
+    },
+    {
+        .question = "The first interstellar ship will be powered by",
+        .choices = std::vector<std::string>({
+            "Warp Energy", "Antimatter",
+            "Magic", "Fusion"
+        }),
+        .id = 19
+    },{
+        .question = "What will be the average life expectancy in 2100?",
+        .choices = std::vector<std::string>({
+            "50 years", "80 years",
+            "120 years", "200+ years"
+        }),
+        .id = 20
+    },{
+        .question = "Average number of working hours per week in 2100?",
+        .choices = std::vector<std::string>({
+            "40", "20",
+            "80", "60"
+        }),
+        .id = 21
+    },{
+        .question = "What will the latest version of Macrohard's Doors OS be called in 2100?",
+        .choices = std::vector<std::string>({
+            "Doors Future", "Doors 20",
+            "Doors MMC", "Doors 2100"
+        }),
+        .id = 22
+    },{
+        .question = "When will the world's first trillionare appear?",
+        .choices = std::vector<std::string>({
+            "2050s - 2090s", "2030s - 2040s",
+            "2100s", "2200s or later"
+        }),
+        .id = 23
+    },{
+        .question = "In what century will we first find alien life?",
+        .choices = std::vector<std::string>({
+            "22nd", "21st",
+            "23rd", "24th"
+        }),
+        .id = 24
     }
 });
 
