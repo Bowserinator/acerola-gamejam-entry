@@ -51,7 +51,11 @@ public:
 
     virtual void draw() override {
         if (site->incorrectTotal > 0) {
-            nextScene = 12;
+            nextScene = 12; // gameover
+            animations[1].startOnce(); // Fade out
+        }
+        else if (site->done) {
+            nextScene = 14; // end
             animations[1].startOnce(); // Fade out
         }
 

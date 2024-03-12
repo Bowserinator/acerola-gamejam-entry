@@ -1,6 +1,6 @@
 # An Aberration of Memory (Acerola Game Jam Entry)
 
-A game about time and memory, written in C++ with Raylib. Made for the Acerola Jam 0 (https://itch.io/jam/acerola-jam-0).
+A game about time and memory, written in C++ with Raylib. Made for the [Acerola Jam 0](https://itch.io/jam/acerola-jam-0).
 
 **Download and more info:** Itch page: https://bowserinator.itch.io/an-aberration-of-memory
 

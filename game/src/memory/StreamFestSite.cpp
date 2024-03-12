@@ -188,7 +188,7 @@ void StreamFestSite::advanceQuestions() {
         done = true;
         for (auto btn : answerButtons)
             btn->hide()->disable();
-        questionLabel->setText("OVER!");
+        questionLabel->setText("Stream will start in a moment!");
         timeLeft = 0.0f;
         return; // TODO win screen
     }
@@ -239,12 +239,10 @@ void StreamFestSite::reset() {
 }
 
 void StreamFestSite::correct() {
-    std::cout << "CORRECT\n";
     correctTotal++;
 }
 
 void StreamFestSite::wrong() {
-    std::cout << "WRONG\n";
     distortion = 1.0;
     incorrectTotal++;
 }

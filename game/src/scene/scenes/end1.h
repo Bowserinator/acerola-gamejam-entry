@@ -41,7 +41,6 @@ public:
             .setTitle(PLAYER_TITLE).setTitleColor(PLAYER_TITLE_COLOR));
         dialogManager.addNode(DialogManager::Node(13, 0, "")
             .setOnActive([this](DialogManager::Node &) { animations[2].startOnce(); }));
-        dialogManager.jumpToNode(1);
 
         colliders.emplace_back(0, 170, screenWidth, 100);
         colliders.emplace_back(-100, 0, 100, screenHeight);
@@ -50,8 +49,15 @@ public:
 
     virtual void draw() override {
         UpdateMusicStream(SoundCache::ref()->endMusic);
-        player->setPos(vec2(150, 122));
+        player->setPos(vec2(150, screenHeight));
         player->velocity = vec2(0);
+
+        if (!start && animations[0].progress() == 1.0f) {
+            dialogManager.jumpToNode(1);
+            start = true;
+        }
+
+
         BeginMode2D(camera);
         DrawTexturePro(bg,
             Rectangle{0, 0, (float)bg.width, (float)bg.height },
@@ -82,6 +88,7 @@ public:
 
     virtual void init() override {
         LevelScene::init();
+        animations[0].setDuration(4.0f);
         animations.push_back(Animation(2.0f));
         animations.push_back(Animation(5.0f));
 
@@ -97,10 +104,13 @@ public:
         LevelScene::onSwitchTo();
         player->scale = 1.3f;
         PlayMusicStream(SoundCache::ref()->endMusic);
+        start = false;
+        dialogManager.jumpToNode(0);
     }
 
 private:
     Texture2D bg, thankBg;
+    bool start = false;
 };
 
 

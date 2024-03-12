@@ -37,6 +37,11 @@ public:
 
     float getDuration() const { return duration; }
 
+    void setDuration(float duration) {
+        this->duration = duration;
+        orgDuration = duration;
+    }
+
     Animation& setEasingFunction(std::function<float(float)> easingFunction) {
         this->easingFunction = easingFunction;
         return *this;
