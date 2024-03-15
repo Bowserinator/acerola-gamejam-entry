@@ -65,7 +65,7 @@ public:
             d.draw();
     }
 
-    virtual void init() {
+    virtual void init() override {
         TimeLevelScene::init();
     };
 

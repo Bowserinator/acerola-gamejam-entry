@@ -1,5 +1,5 @@
 #ifndef NEWS_QUESTIONS_H
-#define NEWS_QUESITONS_H
+#define NEWS_QUESTIONS_H
 
 #include "News.h"
 

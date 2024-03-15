@@ -59,23 +59,28 @@ void ui::Panel::onUnfocus() {
 }
 
 // Propogate rest of the events
-#define PROPOGATE_EVENT(evt) for (auto child : std::ranges::views::reverse(children)) \
+#define PROPOGATE_EVENT(evt) for (int i = children.size() - 1; i >= 0; i--) { \
+        auto child = children[i]; \
         if (child->contains(localPos + eventDelta - child->pos)) { \
             child->evt(localPos + eventDelta - child->pos); \
             break; \
-        }
-#define PROPOGATE_EVENT_VAR(evt, var) for (auto child : std::ranges::views::reverse(children)) \
+        }}
+#define PROPOGATE_EVENT_VAR(evt, var) for (int i = children.size() - 1; i >= 0; i--) { \
+        auto child = children[i];\
         if (child->contains(localPos + eventDelta - child->pos)) { \
             child->evt(localPos + eventDelta - child->pos, var); \
             break; \
-        }
+        }}
 
 void ui::Panel::onMouseMoved(Vector2 localPos) {
-    for (auto child : std::ranges::views::reverse(children))
+    for (int i = children.size() - 1; i >= 0; i--) {
+        auto child = children[i];
         child->onMouseMoved(localPos + eventDelta - child->pos);
+    }
 
     Vector2 prevLocalPos = localPos - GetMouseDelta();
-    for (auto child : std::ranges::views::reverse(children)) { // TODO
+    for (int i = children.size() - 1; i >= 0; i--) {
+        auto child = children[i];
         bool containsNow = child->contains(localPos + eventDelta - child->pos);
         bool containsPrev = child->contains(prevLocalPos + eventDelta - child->pos); 
 
@@ -90,9 +95,11 @@ void ui::Panel::onMouseEnter(Vector2 localPos) {
 }
 void ui::Panel::onMouseLeave(Vector2 localPos) {
     Vector2 prevLocalPos = localPos - GetMouseDelta();
-    for (auto child : std::ranges::views::reverse(children))
+    for (int i = children.size() - 1; i >= 0; i--) {
+        auto child = children[i];
         if (child->contains(prevLocalPos + eventDelta - child->pos))
             child->onMouseLeave(localPos + eventDelta - child->pos);
+    }
 }
 void ui::Panel::onMouseDown(Vector2 localPos, unsigned button) {
     PROPOGATE_EVENT_VAR(onMouseDown, button)
@@ -103,7 +110,8 @@ void ui::Panel::onMouseRelease(Vector2 localPos, unsigned button) {
 }
 void ui::Panel::onMouseClick(Vector2 localPos, unsigned button) {
     bool alreadyClicked = false;
-    for (auto child : std::ranges::views::reverse(children)) {
+    for (int i = children.size() - 1; i >= 0; i--) {
+        auto child = children[i];
         if (child->contains(localPos + eventDelta - child->pos) && !alreadyClicked) {
             child->onMouseClick(localPos + eventDelta - child->pos, button);
             alreadyClicked = true;
@@ -117,13 +125,17 @@ void ui::Panel::onMouseWheelInside(Vector2 localPos, float d) {
 }
 
 void ui::Panel::onMouseWheel(Vector2 localPos, float d) {
-    for (auto child : std::ranges::views::reverse(children))
+    for (int i = children.size() - 1; i >= 0; i--) {
+        auto child = children[i];
         child->onMouseWheel(localPos + eventDelta - child->pos, d);
+    }
 }
 
 void ui::Panel::updateKeys(bool shift, bool ctrl, bool alt) {
-    for (auto child : std::ranges::views::reverse(children))
+    for (int i = children.size() - 1; i >= 0; i--) {
+        auto child = children[i];
         child->updateKeys(shift, ctrl, alt);
+    }
 }
 
 void ui::Panel::processDeletion() {

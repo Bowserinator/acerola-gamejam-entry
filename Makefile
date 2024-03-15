@@ -42,11 +42,14 @@ PROJECTS := raylib acerola-game-jam
 
 all: $(PROJECTS)
 
+EMSDK_PATH ?= /mnt/c/Users/Bowserinator/Downloads/emsdk
+
 raylib:
 ifneq (,$(raylib_config))
 	@echo "==== Building raylib ($(raylib_config)) ===="
 	@${MAKE} --no-print-directory -C build -f raylib.make config=$(raylib_config)
 endif
+
 
 acerola-game-jam: raylib
 ifneq (,$(acerola_game_jam_config))

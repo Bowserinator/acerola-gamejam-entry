@@ -20,7 +20,7 @@ void TimeLevelScene::tick(float dt) {
             states.pop_back();
     } else {
         auto playerPos = player->getPos();
-        states.emplace_back(playerPos.x, playerPos.y);
+        // states.emplace_back(playerPos.x, playerPos.y);
         if (states.size() >= MAX_STATES)
             restart();
     }

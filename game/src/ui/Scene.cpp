@@ -28,7 +28,9 @@ void Scene::update() {
     if (GetMouseDelta() != Vector2{0, 0})
         SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 
-    for (auto child : std::ranges::views::reverse(children)) {
+    for (int i = children.size() - 1; i >= 0; i--) {
+        auto child = children[i];
+
         // -- Input events
         Vector2 localPos = GetMousePosition() - pos;
         Vector2 childLocalPos = localPos - child->pos;

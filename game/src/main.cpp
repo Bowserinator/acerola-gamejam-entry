@@ -34,6 +34,17 @@ MessageCallback(GLenum source,
 }
 #endif
 
+void UpdateDrawFrame() {
+    EventBuffer::ref()->reset();
+
+    manager.tick(GetFrameTime());
+
+    BeginDrawing();
+    ClearBackground(BLACK);
+    manager.draw();
+    EndDrawing();
+}
+
 int main(void) {
     InitWindow(screenWidth, screenHeight, windowTitle);
 
@@ -52,14 +63,7 @@ int main(void) {
     SetTargetFPS(FPS);
 
     while (!WindowShouldClose()) {
-        EventBuffer::ref()->reset();
-
-        manager.tick(GetFrameTime());
-
-        BeginDrawing();
-        ClearBackground(BLACK);
-        manager.draw();
-        EndDrawing();
+        UpdateDrawFrame();
     }
 #endif
 
